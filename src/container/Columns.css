@@ -1,0 +1,14 @@
+
+#Columns {
+    overflow-x: visible;
+    display: inline;    
+}
+
+.container {
+    margin: 20px;   
+    display: inline;
+    float: left;
+    width: 300px;
+    background-color: lightgrey;
+    border-radius: 10px;  
+}

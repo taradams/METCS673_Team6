@@ -1,0 +1,20 @@
+
+.btn {
+    border: none;
+    background-color: inherit;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+    outline:none;
+    width: 100%;
+}
+
+.btn:hover {
+    text-decoration: underline;
+    background-color: grey;
+}
+
+.h5 {
+    padding-left: 20px;    
+}
