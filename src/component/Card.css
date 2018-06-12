@@ -1,0 +1,12 @@
+.card-body input {
+    width:100%;
+}
+
+.card .task {
+    margin: 10px;
+    background-color: white;
+    border-radius: 2px;
+    text-align: left;
+    padding-left: 10px;
+    overflow: auto;
+}

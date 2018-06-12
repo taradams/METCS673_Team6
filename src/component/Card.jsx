@@ -1,6 +1,5 @@
 import React from "react";
 import "./Card.css";
-import TextareaAutosize from 'react-autosize-textarea';
 
 export default class Card extends React.Component {
     constructor(props) {
@@ -13,22 +12,10 @@ export default class Card extends React.Component {
 
     //props 
     render() {
-        const textAreaStyle = {
-            resize: "none",
-            width: "100%",
-            boxSizing: "border-box",
-            borderRadius: 2,
-            border: "none"
-        };
         return (
-            <div className="card">
+            <div className="card task box">
                 <div className="card-body">
-                    {this.state.addCard ? 
-                        <div>
-                            <TextareaAutosize rows={3} style={textAreaStyle}/>
-                            <button type="button" className="btn btn-success">Add</button>
-                        </div>
-                        :
+                    {
                         this.props.card.content
                     }
                 </div>

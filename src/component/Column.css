@@ -16,11 +16,11 @@
     border-radius: 10px;      
 }
 
-.h5 {
-    /* padding-left: 20px;     */
-}
-
-
 #columncard.card {
     margin-top: 10px;
+}
+
+.AddFooter {
+    margin-left: 10px;
+    margin-right: 10px;
 }
