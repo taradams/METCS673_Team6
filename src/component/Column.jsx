@@ -28,8 +28,10 @@ export default class Column extends React.Component {
     }
 
     onAddButtonConfirmation() {
-        this.state.cards.push({content: this.state.value});
-        this.setState({addingCard: false, value: null, cards: this.state.cards});
+        if (this.state.value !== "") {
+            this.state.cards.push({content: this.state.value});
+            this.setState({addingCard: false, value: "", cards: this.state.cards});
+        }
     }
 
     render() {
