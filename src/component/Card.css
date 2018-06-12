@@ -8,5 +8,11 @@
     border-radius: 2px;
     text-align: left;
     padding-left: 10px;
-    overflow: auto;
+    padding-right: 10px;
+}
+
+.card-body {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word
 }
