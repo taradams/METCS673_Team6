@@ -22,7 +22,7 @@ export default class Column extends React.Component {
         var cards = this.props.cards ? this.props.cards : [];
         console.log(this.state.addingCard);
         return (
-            <div className="card">
+            <div id="columncard" className="card">
                 <div className="card-body">
                     <h5 className="card-title">{this.props.title}</h5>
                     <div className="card-text">
@@ -33,8 +33,11 @@ export default class Column extends React.Component {
                         }
                     </div>
                     {
-                        this.state.addingCard ? (<input type="text"/> ) : 
-                        (<button onClick={this.onAddCardClick} className="btn">Add card</button>)
+                        this.state.addingCard ? (
+                            <Card addCard={true}/>
+                            ) 
+                            : 
+                            (<button onClick={this.onAddCardClick} id="Add" className="btn">Add card</button>)
                     }
                 </div>   
             </div>

@@ -5,10 +5,11 @@
 }
 
 .container {
-    margin: 20px;   
+    margin: 20px;
     display: inline;
     float: left;
+    padding: 0px;
     width: 300px;
     background-color: lightgrey;
-    border-radius: 10px;  
+    border-radius: 5px;
 }

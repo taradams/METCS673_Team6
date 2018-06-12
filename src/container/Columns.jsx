@@ -9,17 +9,17 @@ export default class Columns extends React.Component {
 
     render() {
         return (
-        <span id="Columns">
-            <span className="container">
+        <div id="Columns">
+            <div className="container">
                     <Column title="Backlog" />
-            </span>
-            <span className="container">
+            </div>
+            <div className="container">
                     <Column title="In development"/>
-            </span>
-            <span className="container">
+            </div>
+            <div className="container">
                     <Column title="Done" />
-            </span>
-        </span>
+            </div>
+        </div>
         );
     }
 }

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "react": "^16.4.0",
+    "react-autosize-textarea": "^3.0.3",
     "react-dom": "^16.4.0",
     "react-scripts": "1.1.4"
   },
