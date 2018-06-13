@@ -14,7 +14,7 @@ export default class Columns extends React.Component {
                     <Column title="Backlog" />
             </div>
             <div className="container">
-                    <Column title="In development"/>
+                    <Column title="In Development"/>
             </div>
             <div className="container">
                     <Column title="Done" />
