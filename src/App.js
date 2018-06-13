@@ -41,7 +41,7 @@ class App extends Component {
             />
             <Route
               exact path={routes.HOME}
-              component={() => <HomePage />}
+              component={() => <HomePage/>}
             />
             <Route
               exact path={routes.ACCOUNT}
