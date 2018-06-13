@@ -11,13 +11,13 @@ export default class Columns extends React.Component {
         return (
         <div id="Columns">
             <div className="container">
-                    <Column title="Backlog" />
+                <Column title="Backlog" />
             </div>
             <div className="container">
-                    <Column title="In Development"/>
+                <Column title="In Development"/>
             </div>
             <div className="container">
-                    <Column title="Done" />
+                <Column title="Done" />
             </div>
         </div>
         );

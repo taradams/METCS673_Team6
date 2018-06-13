@@ -18,10 +18,17 @@
 
 #columncard.card {
     padding-top: 10px;
-    color: white;
+    color: black;
+    font-size: 15px;
 }
 
 .AddFooter {
     margin-left: 10px;
     margin-right: 10px;
+}
+
+.card-title {
+    color: white;
+    font-size: 20px;
+    font-family: "Lato"
 }
