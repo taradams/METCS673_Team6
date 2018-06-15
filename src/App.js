@@ -2,27 +2,13 @@ import React, { Component } from 'react';
 import './App.css';
 
 import Columns from './container/Columns';
-import {BrowserRouter as Router, Route,} from 'react-router-dom';
-import Navigation from './component/Navigation';
-import LandingPage from './component/Landing';
-import SignUpPage from './component/SignUp';
-import SignInPage from './component/SignIn';
-import PasswordForgetPage from './component/PasswordForget';
-import HomePage from './component/Home';
-import AccountPage from './component/Account';
-import * as routes from './constants/routes';
-import withAuthentication from './component/withAuthentication';
-
+import Page from './component/Page';
 class App extends Component {
 
   render() {
     return (
       <div className="App">
-<<<<<<< HEAD
 
-=======
-      
->>>>>>> Added login/logout, authorization to view appropriate pages when signed in/out, authentication to authenticate user session.
         <Router>
           <div>
             <Navigation />
@@ -39,9 +25,10 @@ class App extends Component {
         <div className="row">
           <Columns/>
         </div>
-      </div>
+        <Page />
+     </div>
    );
   }
 }
 
-export default withAuthentication(App);
+export default App;
