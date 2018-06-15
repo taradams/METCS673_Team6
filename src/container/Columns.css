@@ -1,13 +1,12 @@
 
 #Columns {
-    overflow-x: visible;
-    display: inline;    
+    overflow-x: scroll;
+    white-space: nowrap;
 }
 
 .container {
     margin: 20px;
-    display: inline;
-    float: left;
+    display: inline-block;
     padding: 0px;
     width: 300px;
     background-color: lightgrey;
