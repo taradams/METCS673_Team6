@@ -8,6 +8,10 @@ export default class Card extends React.Component {
         this.state = {
             addCard: this.props.addCard ? this.props.addCard : false
         };
+
+        // this.state = {
+        //     cardContent: ""
+        // }
     }
 
     //props 
