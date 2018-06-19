@@ -6,8 +6,15 @@ export default class Card extends React.Component {
         super(props);
     
         this.state = {
-            addCard: this.props.addCard ? this.props.addCard : false
+
         };
+        this.onClickDelete = this.onClickDelete.bind(this);
+    }
+
+    onClickDelete() {
+        if (this.props.deleteHandler) {
+            this.props.deleteHandler(this.props.card.id);
+        }
     }
 
     //props 
@@ -18,6 +25,7 @@ export default class Card extends React.Component {
                     {
                         this.props.card.content
                     }
+                    <button type="button" style={{float: "right"}} onClick={this.onClickDelete}  className="btn">X</button>
                 </div>
             </div>
         );

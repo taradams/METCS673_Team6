@@ -8,18 +8,44 @@ export default class Column extends React.Component {
         super(props);
 
         this.state = {
+            title: this.props.title,
             addingCard: false,
+            editTitle: false,
             value: "",
             cards: this.props.cards ? this.props.cards : []
         };
 
         this.onAddCardClick = this.onAddCardClick.bind(this);
-        this.onChange = this.onChange.bind(this);
+        this.onChangeTaskToAdd = this.onChangeTaskToAdd.bind(this);
+        this.onChangeTitle = this.onChangeTitle.bind(this);
         this.onAddButtonConfirmation = this.onAddButtonConfirmation.bind(this);
+        this.deleteTask = this.deleteTask.bind(this);
+        this.editTitleMode = this.editTitleMode.bind(this);
+        this.handleOnEditClick = this.handleOnEditClick.bind(this);
     }
 
-    onChange(e) {
+    generateUUID() {
+        var d = new Date().getTime();
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = (d + Math.random()*16)%16 | 0;
+            d = Math.floor(d/16);
+            return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+        });
+        return uuid;
+    };
+    
+
+
+    onChangeTaskToAdd(e) {
         this.setState({value: e.target.value});
+    }
+
+    onChangeTitle(e) {
+        this.setState({title: e.target.value});
+    }
+
+    handleOnEditClick() {
+        this.setState({editTitle: false});
     }
 
     //todo componentWillMount load cards from db
@@ -29,9 +55,29 @@ export default class Column extends React.Component {
 
     onAddButtonConfirmation() {
         if (this.state.value !== "") {
-            this.state.cards.push({content: this.state.value});
+            this.state.cards.push({content: this.state.value, id: this.generateUUID()});
             this.setState({addingCard: false, value: "", cards: this.state.cards});
         }
+    }
+
+    deleteTask(id) {
+        this.setState({
+            title: this.state.title,
+            addingCard: this.state.addingCard, 
+            value: this.state.value,
+            editTitle: this.state.editTitle,
+            cards: this.state.cards.filter((card) => card.id !== id)
+        });
+    }
+
+    editTitleMode() {
+        this.setState({
+            title: this.state.title,
+            addingCard: this.state.addingCard, 
+            value: this.state.value,
+            editTitle: true,
+            cards: this.state.cards
+        })
     }
 
     render() {
@@ -45,18 +91,31 @@ export default class Column extends React.Component {
         return (
             <div id="columncard" className="card">
                 <div className="card-body">
-                    <h5 className="card-title">{this.props.title}</h5>
+                    {
+                    this.state.editTitle ? 
+                        (<div>
+                            <TextareaAutosize onChange={this.onChangeTitle} value={this.state.title} rows={1} style={textAreaStyle}/>
+                            <button type="button" onClick={this.handleOnEditClick} className="btn btn-success">Confirm</button>
+                        </div>
+                        )
+                    :
+                        (<h5 className="card-title">
+                            {this.state.title}
+                            <button type="button" onClick={this.editTitleMode}  className="btn">Edit</button>
+                        </h5>)
+                    }
                     <div className="card-text">
                         {
                             this.state.cards.map((card) => {
-                                return (<Card card={card}/>);
+                                return (<Card card={card} deleteHandler={this.deleteTask} key={card.id}/>);
                             })
                         }
                     </div>
                     {
                         this.state.addingCard ? (
                             <div className="AddFooter">
-                                <TextareaAutosize onChange={this.onChange} value={this.state.value} rows={3} style={textAreaStyle}/>
+                                <TextareaAutosize onChange={this.onChangeTaskToAdd} value={this.state.value} rows={3} style={textAreaStyle}/>
+                                <br/>
                                 <button type="button" onClick={this.onAddButtonConfirmation} className="btn btn-success">Add</button>
                             </div>)
                             : 

@@ -1,7 +1,6 @@
 
 #Columns {
     overflow-x: scroll;
-    white-space: nowrap;
 }
 
 .container {
@@ -11,4 +10,5 @@
     width: 300px;
     background-color: lightgrey;
     border-radius: 5px;
+    vertical-align: top;
 }
