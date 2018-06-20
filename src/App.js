@@ -25,6 +25,7 @@ class App extends Component {
         <div className="row">
           <Columns/>
         </div>
+
         <Page />
      </div>
    );
