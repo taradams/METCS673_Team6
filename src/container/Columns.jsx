@@ -1,8 +1,8 @@
 import React from 'react';
 import Column from '../component/Column.jsx';
-import './Board.css';
+import './Columns.css';
 
-export default class Board extends React.Component {
+export default class Columns extends React.Component {
     constructor(props) {
         super(props);
 
@@ -19,7 +19,7 @@ export default class Board extends React.Component {
 
     render() {
         return (
-        <div className="Board">
+        <div className="Columns">
             <div className="container">
                     <Column />
             </div>
