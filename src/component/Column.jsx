@@ -8,14 +8,17 @@ export default class Column extends React.Component {
         super(props);
 
         this.state = {
+            columnTitle: "Add New Title",
             addingCard: false,
             value: "",
             cards: this.props.cards ? this.props.cards : []
+            //cards: []
         };
 
         this.onAddCardClick = this.onAddCardClick.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onAddButtonConfirmation = this.onAddButtonConfirmation.bind(this);
+        this.onCancelButtonConfirmation = this.onCancelButtonConfirmation.bind(this);
     }
 
     onChange(e) {
@@ -34,6 +37,11 @@ export default class Column extends React.Component {
         }
     }
 
+    onCancelButtonConfirmation(){
+            this.setState({addingCard: false, value: "", cards: this.state.cards});
+        
+    }
+
     render() {
         const textAreaStyle = {
             resize: "none",
@@ -43,9 +51,10 @@ export default class Column extends React.Component {
             border: "none"
         }
         return (
-            <div id="columncard" className="card">
+            <div className="column">
+                <h4 className="column-title">{this.state.columnTitle}</h4>
                 <div className="card-body">
-                    <h5 className="card-title">{this.props.title}</h5>
+                    {/* <h4 className="column-title">{this.state.columnTitle}</h4> */}
                     <div className="card-text">
                         {
                             this.state.cards.map((card) => {
@@ -54,13 +63,21 @@ export default class Column extends React.Component {
                         }
                     </div>
                     {
+                        // this.state.addingCard ? (
+                        //     <div className="AddFooter">
+                        //         <TextareaAutosize onChange={this.onChange} value={this.state.value} rows={3} style={textAreaStyle}/>
+                        //         <button type="button" onClick={this.onAddButtonConfirmation} className="btn btn-success">Add</button>
+                        //     </div>)
+                        //     : (<button onClick={this.onAddCardClick} className="Add-btn">Add card</button>)
+                    }
+                    {
                         this.state.addingCard ? (
                             <div className="AddFooter">
                                 <TextareaAutosize onChange={this.onChange} value={this.state.value} rows={3} style={textAreaStyle}/>
                                 <button type="button" onClick={this.onAddButtonConfirmation} className="btn btn-success">Add</button>
+                                <button type="button" onClick={this.onCancelButtonConfirmation} className="cancelBtn">X</button>
                             </div>)
-                            : 
-                            (<button onClick={this.onAddCardClick} id="Add" className="btn">Add card</button>)
+                            : (<button onClick={this.onAddCardClick} className="Add-btn">Add card</button>)
                     }
                 </div>   
             </div>

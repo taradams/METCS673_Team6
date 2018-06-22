@@ -1,15 +1,28 @@
 import React from 'react';
 import Column from '../component/Column.jsx';
-import './Columns.css';
+import './Board.css';
 
-export default class Columns extends React.Component {
+export default class Board extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            columns: []
+        };
     }
+
+    addNewColumn(){
+        console.log("Column added!");
+    }
+
+    
 
     render() {
         return (
-        <div id="Columns">
+        <div className="Board">
+            <div className="container">
+                    <Column />
+            </div>
             <div className="container">
                     <Column title="Backlog" />
             </div>
