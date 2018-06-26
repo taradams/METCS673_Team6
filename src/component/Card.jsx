@@ -16,6 +16,7 @@ export default class Card extends React.Component {
         //experimental code below
         this._handleFocus = this._handleFocus.bind(this);
         this._handleFocusOut = this._handleFocusOut.bind(this);
+        this.onClickDelete = this.onClickDelete.bind(this);        
     }
 
     _handleFocus(text) {
@@ -26,6 +27,12 @@ export default class Card extends React.Component {
         console.log('Left editor with text: ' + text);
     }
 
+    onClickDelete() {
+        if (this.props.deleteHandler) {
+            this.props.deleteHandler(this.props.card.id);
+        }
+    }
+
     //props 
     render() {
         return (
@@ -34,6 +41,7 @@ export default class Card extends React.Component {
                     {
                         this.props.card.content
                     }
+                    <button type="button" style={{float: "right"}} onClick={this.onClickDelete}  className="btn">X</button>
                 </div>
                 <div>
                     <EditableLabel 
