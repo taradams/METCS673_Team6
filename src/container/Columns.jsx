@@ -2,6 +2,8 @@ import React from 'react';
 import Column from '../component/Column.jsx';
 import './Columns.css';
 import TextareaAutosize from 'react-autosize-textarea';
+import { DragDropContextProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 export default class Columns extends React.Component {
     constructor(props) {
@@ -33,7 +35,8 @@ export default class Columns extends React.Component {
 
     render() {
         return (
-        <div className="Columns">
+        <DragDropContextProvider backend={HTML5Backend}>
+            <div className="Columns">
             {
                 this.state.columns.map((column) => {
                     return  (<div className="container">
@@ -46,7 +49,8 @@ export default class Columns extends React.Component {
                 <br/>
                 <button id="Add" onClick={this.handleAddListClick} className="btn">Add</button>
             </div>
-        </div>
+            </div>
+        </DragDropContextProvider>
         );
     }
 }

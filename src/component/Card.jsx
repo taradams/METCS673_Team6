@@ -2,9 +2,40 @@ import React from "react";
 import "./Card.css";
 //import InlineEdit from 'react-edit-inline';//library for using inline text editing (didn't work well)
 import EditableLabel from 'react-inline-editing';//another lib for inline editing
+import { DragSource } from 'react-dnd';
+import Types from "../constants/types";
 
+const cardSource = {
+    beginDrag(props) {
+        const item = {
+            content: props.card.content
+        };
+        return item;
+    },
+    
+    endDrag(props, monitor, component) {
+        if (!monitor.didDrop()) {
+            return;
+        }
+        const item = monitor.getItem();
+        const dropResult = monitor.getDropResult();
+        if (dropResult) {
+			alert(`You dropped ${item.content}`);
+		}
+    }
+};
 
-export default class Card extends React.Component {
+function collect(connect, monitor) {
+    return {
+      // Call this function inside render()
+      // to let React DnD handle the drag events:
+      connectDragSource: connect.dragSource(),
+      // You can ask the monitor about the current drag state:
+      isDragging: monitor.isDragging()
+    };
+  }
+
+class Card extends React.Component {
     constructor(props) {
         super(props);
     
@@ -35,7 +66,9 @@ export default class Card extends React.Component {
 
     //props 
     render() {
-        return (
+        const { isDragging, connectDragSource } = this.props
+
+        return (connectDragSource && connectDragSource(
             <div className="card task box">
                 <div className="card-body">
                     {
@@ -43,7 +76,7 @@ export default class Card extends React.Component {
                     }
                     <button type="button" style={{float: "right"}} onClick={this.onClickDelete}  className="btn">X</button>
                 </div>
-                <div>
+                {/* <div>
                     <EditableLabel 
                         text= {this.state.text}
                         labelClassName='myLabelClass'
@@ -59,8 +92,10 @@ export default class Card extends React.Component {
                     {
                         this.props.card.content = this.state.text
                     }                     
-                </div>
+                </div> */}
             </div>
-        );
+        ));
     }
 }
+
+export default DragSource(Types.CARD, cardSource, collect)(Card);

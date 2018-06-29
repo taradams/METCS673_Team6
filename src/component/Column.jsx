@@ -2,9 +2,41 @@ import React from 'react';
 import Card from './Card';
 import './Column.css';
 import TextareaAutosize from 'react-autosize-textarea';
+import {
+	DropTarget
+} from 'react-dnd';
+import Types from "../constants/types";
 
-export default class Column extends React.Component {
-    constructor(props) {
+const cardTarget = {
+    drop(props, monitor) {
+        if (monitor.didDrop()) {
+            return;
+        }
+        const item = monitor.getItem();
+        return { text: item.text };
+    },
+    canDrop(props, monitor) {
+        // You can disallow drop based on props or item
+        const item = monitor.getItem();
+        return true;
+    },
+}
+
+function collect(connect, monitor) {
+    return {
+      // Call this function inside render()
+      // to let React DnD handle the drag events:
+      connectDropTarget: connect.dropTarget(),
+      // You can ask the monitor about the current drag state:
+      isOver: monitor.isOver(),
+      isOverCurrent: monitor.isOver({ shallow: true }),
+      canDrop: monitor.canDrop(),
+      itemType: monitor.getItemType()
+    };
+  }
+
+class Column extends React.Component {
+    constructor(props) { 
         super(props);
 
         this.state = {
@@ -95,7 +127,9 @@ export default class Column extends React.Component {
             borderRadius: 2,
             border: "none"
         }
-        return (
+
+        const { isOver, canDrop, connectDropTarget } = this.props;
+        return (connectDropTarget && connectDropTarget(
             <div className="column">
                 <h4 className="column-title">{this.state.columnTitle}</h4>
                 <div className="card-body">
@@ -131,6 +165,8 @@ export default class Column extends React.Component {
                     }
                 </div>   
             </div>
-        )
+        ))
     }
 }
+
+export default DropTarget(Types.CARD, cardTarget, collect)(Column);
