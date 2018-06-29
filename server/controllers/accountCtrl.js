@@ -1,4 +1,7 @@
+//import model
 var Account = require('./../models/Account');
+
+
 const {body, validationResult} = require('express-validator/check');
 const {sanitizeBody} = require('express-validator/filter');
 
