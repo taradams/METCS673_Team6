@@ -12,18 +12,35 @@ var task_controller = require('../controllers/taskCtrk');
 
 /* ACCOUNT ROUTES */ //TARA
 
-//create account
-//login
-//logout
+//POST request for account authentication
+router.post('/login',  accountCtrl.account_login_post);
+
+//GET request for logout
+router.get('/logout', accountCtrl.logout_get);
+
+
+//POST request for creating an Account
+router.post('/createaccount',  accountCtrl.account_create_post);
+
+//GET request to display account information
+//router.get('/account', account_controller.account_detail);
 
 /* COLUMN ROUTES */ //TARA
 
-//create column
-//update column
-//display tasks in column
-//delete columns
+//GET request for displaying columns
+router.get('/columns', columnCtrl.display_columns);
 
-/* COMMENT ROUTES */
+//POST request for adding new column
+router.post('/columns', columnCtrl.new_column);
+
+//PUT request for updating column name
+router.put('/columns/:column_id', columnCtrl.edit_column);
+
+//PUT request for updating column name
+router.delete('/columns/:column_id', columnCtrl.delete_column);
+
+
+/* COMMENT ROUTES */ //N/a for this iteration
 
 /* TASK ROUTES */ //FRED
 
@@ -41,7 +58,14 @@ var task_controller = require('../controllers/taskCtrk');
 //update issue information
 
 /* CHAT ROUTES */   //TARA
-//create group chat
+
+//GET request for displaying messages
+router.get('/chat', messageCtrl.display_messages);
+
+//POST request for adding new message
+router.post('/chat', messageCtrl.new_message);
+
+
 //display messages
 //create message
 
