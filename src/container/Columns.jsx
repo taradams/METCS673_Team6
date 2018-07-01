@@ -10,11 +10,14 @@ export default class Columns extends React.Component {
         super(props);
         this.state = {
             columns: [{
-                title: "Backlog"   
+                title: "Backlog",
+                id: this.generateUUID()
             }, {
-                title: "In development"
+                title: "In development",
+                id: this.generateUUID()
             }, {
-                title: "Done"
+                title: "Done",
+                id: this.generateUUID()
             }],
             addListValue: ""
         }
@@ -22,16 +25,24 @@ export default class Columns extends React.Component {
         this.handleAddListClick = this.handleAddListClick.bind(this);
     }
 
+    generateUUID() {
+        var d = new Date().getTime();
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = (d + Math.random()*16)%16 | 0;
+            d = Math.floor(d/16);
+            return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+        });
+        return uuid;
+    };
+
     handleInputAddColumnField(e) {
         this.setState({addListValue: e.target.value});
     }
 
     handleAddListClick() {
-        this.state.columns.push({ title: this.state.addListValue });
+        this.state.columns.push({ title: this.state.addListValue, id: this.generateUUID() });
         this.setState({ addListValue: "", columns: this.state.columns });
     }
-
-    
 
     render() {
         return (
@@ -40,7 +51,7 @@ export default class Columns extends React.Component {
             {
                 this.state.columns.map((column) => {
                     return  (<div className="container">
-                        <Column title={column.title} />
+                        <Column title={column.title} id={column.id} key={column.id}/>
                     </div>)
                 })
             }

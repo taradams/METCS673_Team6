@@ -8,7 +8,8 @@ import Types from "../constants/types";
 const cardSource = {
     beginDrag(props) {
         const item = {
-            content: props.card.content
+            card: props.card,
+            deleteHandler: props.deleteHandler
         };
         return item;
     },
@@ -20,7 +21,7 @@ const cardSource = {
         const item = monitor.getItem();
         const dropResult = monitor.getDropResult();
         if (dropResult) {
-			alert(`You dropped ${item.content}`);
+            props.deleteHandler(props.card.id);
 		}
     }
 };
@@ -74,23 +75,6 @@ class Card extends React.Component {
                 }
                 <button type="button" style={{float: "right"}} onClick={this.onClickDelete}  className="btn">X</button>
             </div>
-            {/* <div>
-                <EditableLabel 
-                    text= {this.state.text}
-                    labelClassName='myLabelClass'
-                    inputClassName='myInputClass'
-                    inputWidth='200px'
-                    inputHeight='25px'
-                    //inputMaxLength='50'
-                    labelFontWeight='bold'
-                    inputFontWeight='bold'
-                    onFocus={this._handleFocus}
-                    onFocusOut={this._handleFocusOut}
-                />   
-                {
-                    this.props.card.content = this.state.text
-                }                     
-            </div> */}
             </div>)
             :
             <div/>

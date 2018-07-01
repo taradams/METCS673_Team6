@@ -8,11 +8,12 @@ import {
 import Types from "../constants/types";
 
 const cardTarget = {
-    drop(props, monitor) {
+    drop(props, monitor, component) {
         if (monitor.didDrop()) {
             return;
         }
         const item = monitor.getItem();
+        component.handleDrop({content: item.card.content, id: item.card.id});
         return { text: item.text };
     },
     canDrop(props, monitor) {
@@ -45,7 +46,6 @@ class Column extends React.Component {
             editTitle: false,
             value: "",
             cards: this.props.cards ? this.props.cards : []
-            //cards: []
         };
 
         this.onAddCardClick = this.onAddCardClick.bind(this);
@@ -68,8 +68,6 @@ class Column extends React.Component {
         return uuid;
     };
     
-
-
     onChangeTaskToAdd(e) {
         this.setState({value: e.target.value});
     }
@@ -92,6 +90,11 @@ class Column extends React.Component {
             this.state.cards.push({content: this.state.value, id: this.generateUUID()});
             this.setState({addingCard: false, value: "", cards: this.state.cards});
         }
+    }
+
+    handleDrop(card) {
+        this.state.cards.push(card);
+        this.setState({addingCard: false, value: "", cards: this.state.cards});
     }
 
     onCancelButtonConfirmation(){
