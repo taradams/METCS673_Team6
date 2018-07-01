@@ -15,7 +15,7 @@ var AccountSchema = new Schema(
 
 
 //authenticate input against database
-/*
+
 AccountSchema.statics.authenticate = function (email, password, callback) {
   Account.findOne({ email: email })
     .exec(function (err, account) {
@@ -50,7 +50,7 @@ AccountSchema.pre('save', function (next) {
     next();
   })
 });
-*/
+
 
 // Virtual for Account's first name
 AccountSchema

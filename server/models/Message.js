@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var MessageSchema = new Schema(
   {
-    Author: {type: Schema.ObjectId, ref: 'Account', required:true},
+    author: {type: Schema.ObjectId, ref: 'Account', required:true},
     created_date: {type: Date, default: Date.now,  required: true},
     message: {type: String, required: true}
  }

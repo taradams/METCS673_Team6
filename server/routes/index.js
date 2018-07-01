@@ -36,7 +36,7 @@ router.post('/columns', columnCtrl.new_column);
 //PUT request for updating column name
 router.put('/columns/:column_id', columnCtrl.edit_column);
 
-//PUT request for updating column name
+//DELETE request for deleting
 router.delete('/columns/:column_id', columnCtrl.delete_column);
 
 
@@ -64,19 +64,6 @@ router.get('/chat', messageCtrl.display_messages);
 
 //POST request for adding new message
 router.post('/chat', messageCtrl.new_message);
-
-
-//display messages
-//create message
-
-
-
-
-
-
-
-
-
 
 
 
