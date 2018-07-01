@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 //require controller modules
-var account_controller = require('../controllers/accountCtrl');
-var column_controller = require('../controllers/columnCtrl');
-var comment_controller = require('../controllers/commentCtrl');
-var task_controller = require('../controllers/taskCtrk');
-
+var accountCtrl = require('../controllers/accountCtrl');
+var columnCtrl = require('../controllers/columnCtrl');
+var commentCtrl = require('../controllers/commentCtrl');
+var taskCtrl = require('../controllers/taskCtrl');
+var messageCtrl = require('../controllers/messageCtrl');
 
 
 

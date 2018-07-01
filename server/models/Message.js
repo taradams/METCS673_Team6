@@ -14,4 +14,4 @@ var MessageSchema = new Schema(
 
 
 //Export model
-module.exports = mongoose.model('Message', TaskSchema);
+module.exports = mongoose.model('Message', MessageSchema);
