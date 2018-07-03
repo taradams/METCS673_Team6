@@ -23,6 +23,7 @@ export default class Columns extends React.Component {
         }
         this.handleInputAddColumnField = this.handleInputAddColumnField.bind(this);
         this.handleAddListClick = this.handleAddListClick.bind(this);
+        this.handleDeleteColumn = this.handleDeleteColumn.bind(this);
     }
 
     generateUUID() {
@@ -40,8 +41,14 @@ export default class Columns extends React.Component {
     }
 
     handleAddListClick() {
-        this.state.columns.push({ title: this.state.addListValue, id: this.generateUUID() });
-        this.setState({ addListValue: "", columns: this.state.columns });
+        if (this.state.addListValue !== "") {
+            this.state.columns.push({ title: this.state.addListValue, id: this.generateUUID() });
+            this.setState({ addListValue: "", columns: this.state.columns });
+        }
+    }
+
+    handleDeleteColumn(id) {
+        this.setState({ addListValue: "", columns: this.state.columns.filter((column) => column.id !== id) });
     }
 
     render() {
@@ -50,7 +57,7 @@ export default class Columns extends React.Component {
             {
                 this.state.columns.map((column) => {
                     return  (<div className="container">
-                        <Column title={column.title} id={column.id} key={column.id}/>
+                        <Column title={column.title} id={column.id} key={column.id} handleDeleteColumn={this.handleDeleteColumn}/>
                     </div>)
                 })
             }

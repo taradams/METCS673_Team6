@@ -41,6 +41,7 @@ class Column extends React.Component {
         super(props);
 
         this.state = {
+            id: this.props.id,
             title: this.props.title,
             addingCard: false,
             editTitle: false,
@@ -56,6 +57,7 @@ class Column extends React.Component {
         this.deleteTask = this.deleteTask.bind(this);
         this.editTitleMode = this.editTitleMode.bind(this);
         this.handleOnEditClick = this.handleOnEditClick.bind(this);
+        this.onClickDeleteColumn = this.onClickDeleteColumn.bind(this);
     }
 
     generateUUID() {
@@ -77,7 +79,8 @@ class Column extends React.Component {
     }
 
     handleOnEditClick() {
-        this.setState({editTitle: false});
+        if (this.state.title !== "")
+            this.setState({editTitle: false});
     }
 
     //todo componentWillMount load cards from db
@@ -86,10 +89,8 @@ class Column extends React.Component {
     }
 
     onAddButtonConfirmation() {
-        if (this.state.value !== "") {
-            this.state.cards.push({content: this.state.value, id: this.generateUUID()});
-            this.setState({addingCard: false, value: "", cards: this.state.cards});
-        }
+        this.state.cards.push({content: this.state.value, id: this.generateUUID()});
+        this.setState({addingCard: false, value: "", cards: this.state.cards});
     }
 
     handleDrop(card) {
@@ -122,6 +123,12 @@ class Column extends React.Component {
         });
     }
 
+    onClickDeleteColumn() {
+        if (this.props.handleDeleteColumn) {
+            this.props.handleDeleteColumn(this.state.id);
+        }
+    }
+
     render() {
         const textAreaStyle = {
             resize: "none",
@@ -147,6 +154,7 @@ class Column extends React.Component {
                         (<h5 className="card-title">
                             {this.state.title}
                             <button type="button" onClick={this.editTitleMode}  className="btn">Edit</button>
+                            <button type="button" onClick={this.onClickDeleteColumn} style={{float: "right"}} className="btn">X</button>
                         </h5>)
                     }
                     <div className="card-text">
