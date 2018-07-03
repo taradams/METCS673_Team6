@@ -18,7 +18,7 @@ exports.new_column = function(req,res) {
     var column = new Column();
     (req.body.name) ? column.name = req.body.name : null;
 
-    comment.save(function(err) {
+      column.save(function(err) {
       if (err)
         res.send(err);
       res.json({ message: 'Column successfully added!' });
@@ -47,7 +47,7 @@ exports.edit_column = function(req, res) {
 
 exports.delete_column = function(req, res) {
     //selects the column by its ID, then removes it.
-    Column.remove({ _id: req.params.column_id }, function(err, comment) {
+    Column.remove({ _id: req.params.column_id }, function(err, column) {
       if (err)
         res.send(err);
       res.json({ message: 'Column has been deleted' })
