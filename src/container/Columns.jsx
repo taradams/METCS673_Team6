@@ -46,7 +46,6 @@ export default class Columns extends React.Component {
 
     render() {
         return (
-        <DragDropContextProvider backend={HTML5Backend}>
             <div className="Columns">
             {
                 this.state.columns.map((column) => {
@@ -61,7 +60,6 @@ export default class Columns extends React.Component {
                 <button id="Add" onClick={this.handleAddListClick} className="btn">Add</button>
             </div>
             </div>
-        </DragDropContextProvider>
         );
     }
 }

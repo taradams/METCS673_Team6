@@ -9,7 +9,7 @@ import SignUpPage from './SignUp';
 import SignInPage from './SignIn';
 import HomePage from './Home';
 import AccountPage from './Account';
-import ProjectManagerPage from './ProjectManager';
+import ProjectManagerPage from '../container/ProjectManager';
 import * as routes from '../constants/routes';
 import withAuthentication from './withAuthentication';
 import Chatbox from './Chatbox';
