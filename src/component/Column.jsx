@@ -13,11 +13,10 @@ const cardTarget = {
             return;
         }
         const item = monitor.getItem();
-        component.handleDrop({content: item.card.content, id: item.card.id});
+        component.handleDrop({content: item.card.content, id: component.generateUUID()});
         return { text: item.text };
     },
     canDrop(props, monitor) {
-        // You can disallow drop based on props or item
         const item = monitor.getItem();
         return true;
     },
@@ -58,6 +57,7 @@ class Column extends React.Component {
         this.editTitleMode = this.editTitleMode.bind(this);
         this.handleOnEditClick = this.handleOnEditClick.bind(this);
         this.onClickDeleteColumn = this.onClickDeleteColumn.bind(this);
+        this.hasCard = this.hasCard.bind(this);
     }
 
     generateUUID() {
@@ -91,6 +91,10 @@ class Column extends React.Component {
     onAddButtonConfirmation() {
         this.state.cards.push({content: this.state.value, id: this.generateUUID()});
         this.setState({addingCard: false, value: "", cards: this.state.cards});
+    }
+
+    hasCard(card) {
+        return this.state.cards.some(cardInColumn => cardInColumn.id === card.id);
     }
 
     handleDrop(card) {
