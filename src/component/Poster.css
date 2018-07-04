@@ -1,0 +1,17 @@
+.poster_text {
+    width: 100%;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    display: block;
+    padding-left: 0;
+    padding-right: 0;
+    border-width: 0;
+}
+
+.poster_text_border {
+    border: 1px solid gray;
+}
+
+.poster_button {
+    width: 100%;
+}
