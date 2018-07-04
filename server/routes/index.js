@@ -10,7 +10,7 @@ var messageCtrl = require('../controllers/messageCtrl');
 
 
 
-/* ACCOUNT ROUTES */ //TARA
+/* ~~~~~~~~~~~~~~~~~~~~ACCOUNT ROUTES~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 //POST request for account authentication
 router.post('/login',  accountCtrl.account_login_post);
@@ -18,14 +18,13 @@ router.post('/login',  accountCtrl.account_login_post);
 //GET request for logout
 router.get('/logout', accountCtrl.logout_get);
 
-
 //POST request for creating an Account
 router.post('/createaccount',  accountCtrl.account_create_post);
 
 //GET request to display account information
 //router.get('/account', account_controller.account_detail);
 
-/* COLUMN ROUTES */ //TARA
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~COLUMN ROUTES~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */ 
 
 //GET request for displaying columns
 router.get('/columns', columnCtrl.display_columns);
@@ -34,30 +33,30 @@ router.get('/columns', columnCtrl.display_columns);
 router.post('/columns', columnCtrl.new_column);
 
 //PUT request for updating column name
-router.put('/columns/:column_id', columnCtrl.edit_column);
+router.put('/columns/:_id', columnCtrl.edit_column);
 
 //DELETE request for deleting
-router.delete('/columns/:column_id', columnCtrl.delete_column);
+router.delete('/columns/:_id', columnCtrl.delete_column);
 
 
 /* COMMENT ROUTES */ //N/a for this iteration
 
-/* TASK ROUTES */ //FRED
+/* ~~~~~~~~~~~~~~~~~~~~~~~~TASK ROUTES~~~~~~~~~~~~~~~~~~~~~ */ 
 
-//display tasks
-//create task
-//delete task
-//update task column
-//update task information
+//GET request for displaying tasks
+router.get('/tasks/:column_id', taskCtrl.display_tasks);
 
-/* TASK (type = bug) ROUTES */
-//display issues
-//create issue
-//delete issue
-//update issue column
-//update issue information
+//POST request for adding new task
+router.post('/tasks', taskCtrl.new_task);
 
-/* CHAT ROUTES */   //TARA
+//PUT request for updating task name
+router.put('/tasks/:_id', taskCtrl.edit_task);
+
+//DELETE request for deleting
+router.delete('/tasks/:_id', taskCtrl.delete_task);
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~CHAT ROUTES~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */   
 
 //GET request for displaying messages
 router.get('/chat', messageCtrl.display_messages);
