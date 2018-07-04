@@ -17,9 +17,9 @@ exports.display_tasks = function(req, res) {
 exports.new_task = function(req,res) {
     var task = new Task();
     (req.body.task_type) ? task.task_type = req.body.task_type : null;
-    (req.body.status) ? task.status = req.body.status : null; //this needs to be whatever column we're adding it to
-    (req.body.assignee) ? task.Assignee = req.body.assignee : null;
-    (req.body.accountId) ? task.Reporter = req.body.accountId : null; //maybe we make this a session thing?
+    (req.body.status) ? task.status = req.body.status : null;
+    (req.body.assignee) ? task.assignee = req.body.assignee : null;
+    (req.body.reporter) ? task.reporter = req.body.reporter : null; //maybe we make this a session thing with account ID?
     (req.body.overview) ? task.overview = req.body.overview : null;
     (req.body.details) ? task.details  = req.body.details : null;
 
@@ -35,26 +35,27 @@ exports.new_task = function(req,res) {
 };
 
 
-//edit task name
+//edit task 
 
 exports.edit_task = function(req, res) {
-    task.findById(req.params.id, function(err, task) {
+    Task.findById(req.params._id, function(err, task) {
       if (err)
         res.send(err);
 
  
-      (req.body.type) ? task.type = req.body.type : task.type;
+      (req.body.task_type) ? task.task_type = req.body.task_type : task.task_type;
       (req.body.status) ? task.status = req.body.status : task.status; //this needs to be the new column
-      (req.body.assignee) ? task.Assignee = req.body.assignee : task.Assignee;
+      (req.body.assignee) ? task.assignee = req.body.assignee : task.assignee;
       (req.body.overview) ? task.overview = req.body.overview : task.overview;
       (req.body.details) ? task.details  = req.body.details : task.details;
-      task.updated_date = Date.now;
+      task.updated_date = new Date();
     
       //save task
       task.save(function(err) {
         if (err)
           res.send(err);
-        res.json({ message: 'task has been updated' });
+        
+        res.send({ message: 'task has been updated'});
         console.log('task has been updated');
       });
     });
@@ -65,7 +66,7 @@ exports.edit_task = function(req, res) {
 
 exports.delete_task = function(req, res) {
     //selects the task by its ID, then removes it.
-    task.remove({ _id: req.params.id }, function(err, task) {
+    Task.remove({ _id: req.params._id }, function(err, task) {
       if (err)
         res.send(err);
 

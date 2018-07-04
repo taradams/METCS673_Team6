@@ -10,8 +10,9 @@ var messageCtrl = require('../controllers/messageCtrl');
 
 
 
-/* ~~~~~~~~~~~~~~~~~~~~ACCOUNT ROUTES~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~ACCOUNT ROUTES~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */ //to be implemented later
 
+/*
 //POST request for account authentication
 router.post('/login',  accountCtrl.account_login_post);
 
@@ -22,7 +23,7 @@ router.get('/logout', accountCtrl.logout_get);
 router.post('/createaccount',  accountCtrl.account_create_post);
 
 //GET request to display account information
-//router.get('/account', account_controller.account_detail);
+//router.get('/account', account_controller.account_detail); */
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~COLUMN ROUTES~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */ 
 
@@ -49,7 +50,7 @@ router.get('/tasks/:column_id', taskCtrl.display_tasks);
 //POST request for adding new task
 router.post('/tasks', taskCtrl.new_task);
 
-//PUT request for updating task name
+//PUT request for updating task
 router.put('/tasks/:_id', taskCtrl.edit_task);
 
 //DELETE request for deleting
