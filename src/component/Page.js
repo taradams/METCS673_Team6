@@ -12,7 +12,6 @@ import AccountPage from './Account';
 import ProjectManagerPage from '../container/ProjectManager';
 import * as routes from '../constants/routes';
 import withAuthentication from './withAuthentication';
-import Chatbox from './Chatbox';
 const Page = () => 
   <div>
     <Router>
@@ -26,7 +25,6 @@ const Page = () =>
           <Route exact path={routes.PROJECT_MANAGER} component={() => <ProjectManagerPage />} />
       </div>
     </Router>
-    <Chatbox />
   </div>
 
 export default withAuthentication(Page);

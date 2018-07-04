@@ -2,8 +2,8 @@ const initialState = {
     columns: []
 }
 
-export default (state=initialState, action) => {
-    switch (action.type) {
+export default (state = initialState, action) => {
+    switch(action.type) {
         case 'LOAD_COLUMNS':
         return {
             ...state,
