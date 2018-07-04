@@ -25,7 +25,9 @@ exports.new_message = function(req,res) {
       if (err)
         res.send(err);
         
-      res.json({ message: 'Message successfully added!' });
+      //res.json({ message: 'Message successfully added!' });
+      res.send(message);
       console.log('message saved');
+      console.log(message);
     });
 };

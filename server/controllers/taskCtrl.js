@@ -27,8 +27,10 @@ exports.new_task = function(req,res) {
       if (err)
         res.send(err);
 
-      res.json({ message: 'task successfully added!' });
-      console.log(tasks);
+      //res.json({ message: 'task successfully added!' });
+      res.send(task);
+      console.log('task created successfully');
+      console.log(task);
     });
 };
 
