@@ -18,7 +18,7 @@ exports.display_messages = function(req, res) {
 //add new message
 exports.new_message = function(req,res) {
     var message = new Message();
-    (req.body.message) ? message.message = req.body.message : null;
+    (req.body.content) ? message.content = req.body.content : null;
 
     //save message
     message.save(function(err) {

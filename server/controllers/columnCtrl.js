@@ -1,5 +1,6 @@
 //import model
 var Column = require('./../models/Column');
+var Task = require('./../models/Task');
 
 
 //display columns
@@ -45,6 +46,7 @@ exports.edit_column = function(req, res) {
 
         res.json({ message: 'Column has been updated' });
         console.log('column updated');
+        console.log(column);
       });
     });
 };

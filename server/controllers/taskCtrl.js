@@ -1,11 +1,11 @@
-//import model
+//import models
 var Task = require('./../models/Task');
-
+var Column = require('./../models/Column');
 
 //display tasks
 exports.display_tasks = function(req, res) {
     //looks at our Task Schema
-    Task.find(function(err, tasks) {
+    Task.find({status: req.params.column_id}).exec(function(err, tasks) {
       if (err)
         res.send(err);
       //responds with a json object of our database tasks.
@@ -16,7 +16,7 @@ exports.display_tasks = function(req, res) {
 //add new Task
 exports.new_task = function(req,res) {
     var task = new Task();
-    (req.body.type) ? task.type = req.body.type : null;
+    (req.body.task_type) ? task.type = req.body.task_type : null;
     (req.body.status) ? task.status = req.body.status : null; //this needs to be whatever column we're adding it to
     (req.body.assignee) ? task.Assignee = req.body.assignee : null;
     (req.session.accountId) ? task.Reporter = req.session.accountId : null;

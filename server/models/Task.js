@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var TaskSchema = new Schema(
   {
-    type: {type: String, required: true},
+    task_type: {type: String, required: true},
     status: {type: Schema.ObjectId, ref:'Column'},
     Assignee: {type: Schema.ObjectId, ref: 'Account'},
     Reporter: {type: Schema.ObjectId, ref: 'Account', required:true},

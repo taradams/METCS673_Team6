@@ -44,7 +44,7 @@ router.delete('/columns/:_id', columnCtrl.delete_column);
 /* ~~~~~~~~~~~~~~~~~~~~~~~~TASK ROUTES~~~~~~~~~~~~~~~~~~~~~ */ 
 
 //GET request for displaying tasks
-router.get('/tasks', taskCtrl.display_tasks);
+router.get('/tasks/:column_id', taskCtrl.display_tasks);
 
 //POST request for adding new task
 router.post('/tasks', taskCtrl.new_task);
