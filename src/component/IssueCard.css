@@ -1,4 +1,4 @@
-.card {
+.IssueCard {
     /* padding:10px 10px 38px 34px; */
     padding: 10px;
     height: 300px; 
@@ -14,11 +14,11 @@
     opacity: 1;
   }
 
-  .card h5 {
+  .IssueCard h5 {
     margin: 0px;
     text-align: left;
   }
-  .card p{
+  .IssueCard p{
     margin: 0px;
     text-align: left;
   }

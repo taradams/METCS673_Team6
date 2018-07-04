@@ -1,24 +1,22 @@
 import React from 'react';
 import Column from '../component/Column.jsx';
 import './Columns.css';
-import TextareaAutosize from 'react-autosize-textarea';
 import { DragDropContextProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import AddColumn from '../component/AddColumn';
 
 export default class Columns extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            columns: [],
-            addListValue: ""
+            columns: []
         }
-        this.handleInputAddColumnField = this.handleInputAddColumnField.bind(this);
-        this.handleAddListClick = this.handleAddListClick.bind(this);
+        this.handleAddList = this.handleAddList.bind(this);
         this.handleDeleteColumn = this.handleDeleteColumn.bind(this);
     }
 
     //REST API
-    componentWillMount() {
+    componentDidMount() {
         fetch("http://localhost:5000/api/columns", {
             method: 'GET',
             mode: 'cors',
@@ -34,9 +32,7 @@ export default class Columns extends React.Component {
                 this.setState({ 
                     columns: json.map((column) => { 
                         return { title: column.name, id: column._id }
-                    }),
-                    addListValue: ""
-                });
+                    })                });
             }.bind(this));
     }
 
@@ -50,16 +46,15 @@ export default class Columns extends React.Component {
         return uuid;
     };
 
-    handleInputAddColumnField(e) {
-        this.setState({addListValue: e.target.value});
-    }
 
-    handleAddListClick() {
-        if (this.state.addListValue !== "") {
-            columnToAdd = { name: this.state.addListValue };
+
+    handleAddList(value) {
+        if (value !== "") {
+            var columnToAdd = { name: value };
             fetch("http://localhost:5000/api/columns", {
                 method: 'POST',
                 mode: 'cors',
+                body: JSON.stringify(columnToAdd),
                 headers: {
                     'content-type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
@@ -69,11 +64,9 @@ export default class Columns extends React.Component {
                 return response.json();
             })
             .then(function(json) {
-                this.state.columns.push({ title: this.state.addListValue, id: this.generateUUID() });
-                this.setState({ addListValue: "", columns: this.state.columns });
-                this.setState({ addListValue: "", columns: this.state.columns.filter((column) => column.id !== id) });                
+                this.state.columns.push({ title: json.name, id: json._id });
+                this.setState({ columns: this.state.columns });
             }.bind(this));
-
         }
     }
 
@@ -90,7 +83,7 @@ export default class Columns extends React.Component {
                 return response.json();
             })
             .then(function(json) {
-                this.setState({ addListValue: "", columns: this.state.columns.filter((column) => column.id !== id) });                
+                this.setState({ columns: this.state.columns.filter((column) => column.id !== id) });                
             }.bind(this));
         }
 
@@ -104,11 +97,7 @@ export default class Columns extends React.Component {
                     </div>)
                 })
             }
-            <div className="container">
-                <TextareaAutosize value={this.state.addListValue} onChange={this.handleInputAddColumnField} placeholder="Add a list" />
-                <br/>
-                <button id="Add" onClick={this.handleAddListClick} className="btn">Add</button>
-            </div>
+            <AddColumn handleAddList={this.handleAddList}/>
             </div>
         );
     }

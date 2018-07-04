@@ -59,6 +59,27 @@ class Column extends React.Component {
         this.onClickDeleteColumn = this.onClickDeleteColumn.bind(this);
         this.hasCard = this.hasCard.bind(this);
     }
+    
+    componentDidMount() {
+        fetch("http://localhost:5000/api/tasks/" + this.state.id, {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(json) {
+                const cards = json.map((task) => {
+                    return { id: task._id, content: task.overview, status: task.status, details: task.details };
+                });
+                console.log(cards);
+                this.setState({ addingCard: false, value: "", cards: cards });
+            }.bind(this));
+    }
 
     generateUUID() {
         var d = new Date().getTime();
@@ -89,8 +110,27 @@ class Column extends React.Component {
     }
 
     onAddButtonConfirmation() {
-        this.state.cards.push({content: this.state.value, id: this.generateUUID()});
-        this.setState({addingCard: false, value: "", cards: this.state.cards});
+        if (this.state.value !== "") {
+            const card = { task_type: "Normal", status: this.state._id, overview: this.state.value, details: "" };
+            fetch("http://localhost:5000/api/tasks", {
+            method: 'POST',
+            mode: 'cors',
+            body: JSON.stringify(card),
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(json) {
+                console.log(json);
+                this.state.cards.push({content: this.state.value, id: this.generateUUID()});
+                this.setState({addingCard: false, value: "", cards: this.state.cards});
+            }.bind(this));
+
+        }
     }
 
     hasCard(card) {

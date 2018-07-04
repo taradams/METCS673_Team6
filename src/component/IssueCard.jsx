@@ -3,7 +3,7 @@ import './IssueCard.css'
 
 function IssueCard(props){
     return(
-        <div className="card">
+        <div className="IssueCard">
             <h5>{props.title}</h5>
             <div className="horizontal-line" />
             <p>{props.description}</p>

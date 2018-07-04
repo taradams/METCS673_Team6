@@ -12,7 +12,6 @@ import AccountPage from './Account';
 import ProjectManagerPage from '../container/ProjectManager';
 import * as routes from '../constants/routes';
 import withAuthentication from './withAuthentication';
-import Chatbox from './Chatbox';
 import IssueTrackerPage from './IssueTracker';
 import ChatPage from './Chat';
 
@@ -31,7 +30,6 @@ const Page = () =>
           <Route exact path={routes.CHAT} component={() => <ChatPage />} />
       </div>
     </Router>
-    <Chatbox />
   </div>
 
 export default withAuthentication(Page);
