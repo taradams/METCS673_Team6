@@ -13,6 +13,8 @@ import ProjectManagerPage from '../container/ProjectManager';
 import * as routes from '../constants/routes';
 import withAuthentication from './withAuthentication';
 import Chatbox from './Chatbox';
+import IssueTrackerPage from './IssueTracker';
+
 const Page = () => 
   <div>
     <Router>
@@ -24,6 +26,7 @@ const Page = () =>
           <Route exact path={routes.SIGN_IN} component={() => <SignInPage />} />
           <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
           <Route exact path={routes.PROJECT_MANAGER} component={() => <ProjectManagerPage />} />
+          <Route exact path={routes.ISSUE_TRACKER} component={() => <IssueTrackerPage />} />
       </div>
     </Router>
     <Chatbox />

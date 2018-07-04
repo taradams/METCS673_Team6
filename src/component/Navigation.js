@@ -16,6 +16,7 @@ const Navigation = ({authUser}) =>
 const NavigationAuth = () =>
   <ul>
     <li><Link to={routes.PROJECT_MANAGER}>Project Manager</Link></li>
+    <li><Link to={routes.ISSUE_TRACKER}>Issue Tracker</Link></li>
     <li><SignOutButton /></li>
   </ul>
 
