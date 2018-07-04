@@ -23,6 +23,14 @@ app.use(bodyParser.urlencoded({ extended:true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+
+//use sessions for tracking logins
+app.use(session({
+  secret: 'guglielmo maccheroni',
+  resave: true,
+  saveUninitialized: false
+}));
+
 //use router
 app.use('/api', indexRouter);
 
@@ -50,3 +58,5 @@ app.use((req, res, next) => {
 
 //start server
 app.listen(port, () => console.log(`Listening on port ${port}`));
+
+

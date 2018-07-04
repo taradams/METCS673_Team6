@@ -17,14 +17,16 @@ exports.display_columns = function(req, res) {
 //add new column
 exports.new_column = function(req,res) {
     var column = new Column();
-    (req.body.column_name) ? column.name = req.body.column_name : null;
+    (req.body.name) ? column.name = req.body.name : null;
 
       column.save(function(err) {
       if (err)
         res.send(err);
-        
-      res.json({ message: 'Column successfully added!' });
+
+      res.send(column);  
+      //res.json({ message: 'Column successfully added!' });
       console.log('column successfully added');
+      console.log(column);
     });
 };
 
