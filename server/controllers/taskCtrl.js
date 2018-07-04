@@ -16,10 +16,10 @@ exports.display_tasks = function(req, res) {
 //add new Task
 exports.new_task = function(req,res) {
     var task = new Task();
-    (req.body.task_type) ? task.type = req.body.task_type : null;
+    (req.body.task_type) ? task.task_type = req.body.task_type : null;
     (req.body.status) ? task.status = req.body.status : null; //this needs to be whatever column we're adding it to
     (req.body.assignee) ? task.Assignee = req.body.assignee : null;
-    (req.session.accountId) ? task.Reporter = req.session.accountId : null;
+    (req.body.accountId) ? task.Reporter = req.body.accountId : null; //maybe we make this a session thing?
     (req.body.overview) ? task.overview = req.body.overview : null;
     (req.body.details) ? task.details  = req.body.details : null;
 
