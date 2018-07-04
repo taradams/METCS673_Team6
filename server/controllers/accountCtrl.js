@@ -36,7 +36,9 @@ exports.account_create_post = function(req,res,next){
                        // Account saved. Redirect to account detail page.
                        req.session.accountId = account._id;
                        console.log(req.session.accountId);
+                       res.json({ message: 'account saved' }); 
                        //res.redirect('/loggedin');
+                       
                      });
 
                  }
@@ -60,8 +62,10 @@ if(req.body.login_email && req.body.login_password){
         }  
         else {
                  req.session.accountId = account._id;
-                 console.log(req.session.accountId);	        
-                 return res.redirect('/loggedin');	        
+                 console.log(req.session.accountId);	
+                 res.json({ message: 'login successful' });       
+                 //return res.redirect('/loggedin');
+                 //need to send something else here?	        
             }	       
             });	    
          } else {	   
@@ -83,8 +87,10 @@ exports.logout_get = function(req,res,next){
             if (err){
                 return next(err);
             }else{
-                return res.render('index');
-                //console.log(req.session);
+                //return res.render('index');
+                res.json({ message: 'Session destroyed' });
+                console.log('session destroyed');
+                //return something else here?
             }
         });
     }
