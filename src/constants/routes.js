@@ -6,3 +6,4 @@ export const HOME = '/home';
 export const ACCOUNT = '/account';
 export const PASSWORD_FORGET = '/pw-forget';
 export const ISSUE_TRACKER = '/issue-tracker';
+export const CHAT = '/chat';

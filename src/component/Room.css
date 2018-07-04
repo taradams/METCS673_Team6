@@ -1,0 +1,11 @@
+.chat_title {
+    padding: 2px;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 12px;
+}
+
+.room {
+    background-color: lightgrey;
+    width: 20%;
+}

@@ -14,6 +14,7 @@ import * as routes from '../constants/routes';
 import withAuthentication from './withAuthentication';
 import Chatbox from './Chatbox';
 import IssueTrackerPage from './IssueTracker';
+import ChatPage from './Chat';
 
 const Page = () => 
   <div>
@@ -27,6 +28,7 @@ const Page = () =>
           <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
           <Route exact path={routes.PROJECT_MANAGER} component={() => <ProjectManagerPage />} />
           <Route exact path={routes.ISSUE_TRACKER} component={() => <IssueTrackerPage />} />
+          <Route exact path={routes.CHAT} component={() => <ChatPage />} />
       </div>
     </Router>
     <Chatbox />
