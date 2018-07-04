@@ -35,10 +35,10 @@ exports.new_column = function(req,res) {
 //edit column name
 
 exports.edit_column = function(req, res) {
-    Column.findById(req.params.id, function(err, column) {
+    Column.findById(req.params._id, function(err, column) {
       if (err)
         res.send(err);
-      (req.body.column_name) ? column.name = req.body.column_name : column.name;
+      (req.body.name) ? column.name = req.body.name : column.name;
       //save comment
       column.save(function(err) {
         if (err)
@@ -56,9 +56,10 @@ exports.edit_column = function(req, res) {
 
 exports.delete_column = function(req, res) {
     //selects the column by its ID, then removes it.
-    Column.remove({ _id: req.params.id }, function(err, column) {
+    Column.remove({ _id: req.params._id }, function(err, column) {
       if (err)
         res.send(err);
+        
       res.json({ message: 'Column has been deleted' });
       console.log('column deleted');
     })

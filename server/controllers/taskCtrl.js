@@ -38,7 +38,7 @@ exports.new_task = function(req,res) {
 //edit task name
 
 exports.edit_task = function(req, res) {
-    task.findById(req.params.id, function(err, task) {
+    Task.findById(req.params.id, function(err, task) {
       if (err)
         res.send(err);
 
@@ -65,7 +65,7 @@ exports.edit_task = function(req, res) {
 
 exports.delete_task = function(req, res) {
     //selects the task by its ID, then removes it.
-    task.remove({ _id: req.params.id }, function(err, task) {
+    Task.remove({ _id: req.params.id }, function(err, task) {
       if (err)
         res.send(err);
 
