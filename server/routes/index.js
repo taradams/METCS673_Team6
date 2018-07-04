@@ -50,7 +50,7 @@ router.get('/tasks/:column_id', taskCtrl.display_tasks);
 //POST request for adding new task
 router.post('/tasks', taskCtrl.new_task);
 
-//PUT request for updating task name
+//PUT request for updating task
 router.put('/tasks/:_id', taskCtrl.edit_task);
 
 //DELETE request for deleting

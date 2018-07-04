@@ -6,10 +6,10 @@ var TaskSchema = new Schema(
   {
     task_type: {type: String},
     status: {type: Schema.ObjectId, ref:'Column'},
-    Assignee: {type: String},//make this refer to Account schema object in the future?
-    Reporter: {type: String},//make this refer to Account schema object in the future?
+    assignee: {type: String},//make this refer to Account schema object in the future?
+    reporter: {type: String},//make this refer to Account schema object in the future?
     created_date: {type: Date, default: Date.now,  required: true},
-    updated_date: {type:Date},
+    updated_date: {type: Date},
     overview: {type: String},
     details: {type: String}
  }

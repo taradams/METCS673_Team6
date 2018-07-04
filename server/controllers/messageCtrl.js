@@ -18,6 +18,7 @@ exports.display_messages = function(req, res) {
 //add new message
 exports.new_message = function(req,res) {
     var message = new Message();
+    (req.body.author) ? message.author = req.body.author : "Elmo";
     (req.body.content) ? message.content = req.body.content : null;
 
     //save message
