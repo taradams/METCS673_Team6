@@ -13,7 +13,7 @@ import ProjectManagerPage from '../container/ProjectManager';
 import * as routes from '../constants/routes';
 import withAuthentication from './withAuthentication';
 import IssueTrackerPage from './IssueTracker';
-import ChatPage from './Chat';
+import ChatPage from './chat/Chat';
 
 const Page = () => 
   <div>
