@@ -9,31 +9,10 @@ export default class Columns extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            columns: []
+            columns: this.props.columns ? this.props.columns : []
         }
         this.handleAddList = this.handleAddList.bind(this);
         this.handleDeleteColumn = this.handleDeleteColumn.bind(this);
-    }
-
-    //REST API
-    componentDidMount() {
-        fetch("http://localhost:5000/api/columns", {
-            method: 'GET',
-            mode: 'cors',
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-                'Access-Control-Allow-Origin': '*'
-            }
-        })
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(json) {
-                this.setState({ 
-                    columns: json.map((column) => { 
-                        return { title: column.name, id: column._id }
-                    })                });
-            }.bind(this));
     }
 
     generateUUID() {
@@ -49,52 +28,25 @@ export default class Columns extends React.Component {
 
 
     handleAddList(value) {
-        if (value !== "") {
-            var columnToAdd = { name: value };
-            fetch("http://localhost:5000/api/columns", {
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify(columnToAdd),
-                headers: {
-                    'content-type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                }
-            })
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(json) {
-                this.state.columns.push({ title: json.name, id: json._id });
-                this.setState({ columns: this.state.columns });
-            }.bind(this));
+        if (value !== "" && this.props.handleAddList) {
+            this.props.handleAddList(value);
         }
     }
 
     handleDeleteColumn(id) {
-        fetch("http://localhost:5000/api/columns/" + id, {
-            method: 'DELETE',
-            mode: 'cors',
-            headers: {
-                'content-type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            }
-        })
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(json) {
-                this.setState({ columns: this.state.columns.filter((column) => column.id !== id) });                
-            }.bind(this));
-        }
+        if (this.props.handleDeleteColumn)
+            this.props.handleDeleteColumn(id);
+    }
 
     render() {
         return (
             <div className="Columns">
             {
-                this.state.columns.map((column) => {
-                    return  (<div className="container" key={this.generateUUID()}>
+                this.props.columns.map((column) => {
+                    return  (
+                    <div className="container" key={this.generateUUID()}>
                         <Column title={column.title} id={column.id} key={column.id} handleDeleteColumn={this.handleDeleteColumn}/>
-                    </div>)
+                    </div>);
                 })
             }
             <AddColumn handleAddList={this.handleAddList}/>

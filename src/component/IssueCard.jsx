@@ -1,14 +1,20 @@
 import React from 'react';
 import './IssueCard.css'
 
-function IssueCard(props){
-    return(
+class IssueCard extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return(
         <div className="IssueCard">
-            <h5>{props.title}</h5>
+            <h5>{this.props.issue.title}</h5>
             <div className="horizontal-line" />
-            <p>{props.description}</p>
+            <p>{this.props.issue.details}</p>
         </div>
     )
+    }
 }
 
 export default IssueCard;

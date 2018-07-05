@@ -13,6 +13,15 @@ exports.display_tasks = function(req, res) {
     });
   };
 
+//display bugs (task that doesn't have a status for now)
+exports.display_tasks_bugs = function(req, res) {
+  Task.find({status: null}).exec(function(err, tasks) {
+    if (err)
+      res.send(err);
+    res.json(tasks);
+  })
+}
+
 //add new Task
 exports.new_task = function(req,res) {
     var task = new Task();

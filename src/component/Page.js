@@ -14,6 +14,9 @@ import * as routes from '../constants/routes';
 import withAuthentication from './withAuthentication';
 import IssueTrackerPage from './IssueTracker';
 import ChatPage from './chat/Chat';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContextProvider } from 'react-dnd';
+
 
 const Page = () => 
   <div>
@@ -25,7 +28,10 @@ const Page = () =>
           <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />} />
           <Route exact path={routes.SIGN_IN} component={() => <SignInPage />} />
           <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
-          <Route exact path={routes.PROJECT_MANAGER} component={() => <ProjectManagerPage />} />
+          <Route exact path={routes.PROJECT_MANAGER} component={() =>
+            <DragDropContextProvider backend={HTML5Backend}>
+              <ProjectManagerPage />
+            </DragDropContextProvider>} />
           <Route exact path={routes.ISSUE_TRACKER} component={() => <IssueTrackerPage />} />
           <Route exact path={routes.CHAT} component={() => <ChatPage />} />
       </div>

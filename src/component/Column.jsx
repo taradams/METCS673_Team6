@@ -62,24 +62,42 @@ class Column extends React.Component {
     }
     
     componentDidMount() {
-        fetch("http://localhost:5000/api/tasks/" + this.state.id, {
-            method: 'GET',
-            mode: 'cors',
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-                'Access-Control-Allow-Origin': '*'
-            }
-        })
-            .then(function(response) {
-                return response.json();
+        if (this.state.id != "")
+            fetch("http://localhost:5000/api/tasks/" + this.state.id, {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                    'Access-Control-Allow-Origin': '*'
+                }
             })
-            .then(function(json) {
-                const cards = json.map((task) => {
-                    return { id: task._id, content: task.overview, status: task.status, details: task.details };
-                });
-                console.log(cards);
-                this.setState({ addingCard: false, value: "", cards: cards });
-            }.bind(this));
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(json) {
+                    const cards = json.map((task) => {
+                        return { id: task._id, content: task.overview, status: task.status, details: task.details };
+                    });
+                    this.setState({ addingCard: false, value: "", cards: cards });
+                }.bind(this));
+        else
+            fetch("http://localhost:5000/api/tasks", {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(json) {
+                    const cards = json.map((task) => {
+                        return { id: task._id, content: task.overview, status: task.status, details: task.details };
+                    });
+                    this.setState({ addingCard: false, value: "", cards: cards });
+                }.bind(this));
     }
     
     onChangeTaskToAdd(e) {
@@ -118,7 +136,6 @@ class Column extends React.Component {
 
     onAddButtonConfirmation() {
         if (this.state.value !== "") {
-            console.log(this.state.id);
             const card = { task_type: "Normal", status: this.state.id, overview: this.state.value, details: "" };
             fetch("http://localhost:5000/api/tasks", {
             method: 'POST',
@@ -145,23 +162,25 @@ class Column extends React.Component {
     }
 
     handleDrop(card) {
-        const editStatus = { status: this.state.id };
-        fetch("http://localhost:5000/api/tasks/" + card.id, {
-            method: 'PUT',
-            mode: 'cors',
-            body: JSON.stringify(editStatus),
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-                'Access-Control-Allow-Origin': '*'
-            }
-        })
-            .then(function(response) {
-                return response.json();
+        if (this.state.id != "") {
+            const editStatus = { status: this.state.id };
+            fetch("http://localhost:5000/api/tasks/" + card.id, {
+                method: 'PUT',
+                mode: 'cors',
+                body: JSON.stringify(editStatus),
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                    'Access-Control-Allow-Origin': '*'
+                }
             })
-            .then(function(json) {
-                this.state.cards.push(card);
-                this.setState({addingCard: false, value: "", cards: this.state.cards});
-            }.bind(this));
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(json) {
+                    this.state.cards.push(card);
+                    this.setState({addingCard: false, value: "", cards: this.state.cards});
+                }.bind(this));
+        }
     }
 
     onCancelButtonConfirmation(){
@@ -229,8 +248,8 @@ class Column extends React.Component {
                     :
                         (<h5 className="card-title">
                             {this.state.title}
-                            <button type="button" onClick={this.editTitleMode}  className="btn">Edit</button>
-                            <button type="button" onClick={this.onClickDeleteColumn} style={{float: "right"}} className="btn">X</button>
+                            {this.state.id !== "" ? <button type="button" onClick={this.editTitleMode}  className="btn">Edit</button> : null}
+                            {this.state.id !== "" ? <button type="button" onClick={this.onClickDeleteColumn} style={{float: "right"}} className="btn">X</button> : null}
                         </h5>)
                     }
                     <div className="card-text">
@@ -240,7 +259,7 @@ class Column extends React.Component {
                             })
                         }
                     </div>
-                    {
+                    { this.state.id === "" ? null :
                         this.state.addingCard ? (
                             <div className="AddFooter">
                                 <TextareaAutosize onChange={this.onChangeTaskToAdd} value={this.state.value} rows={3} style={textAreaStyle}/>

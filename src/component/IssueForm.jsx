@@ -31,8 +31,8 @@ class IssueForm extends Component{
     }
 
     createNewIssueBtn(){
-        this.props.createNewIssue(this.state.titleInput, this.state.descriptionInput);
-
+        if (this.props.createNewIssue)
+            this.props.createNewIssue(this.state.titleInput, this.state.descriptionInput);
         this.setState({
             titleInput: "",
             descriptionInput: ""
