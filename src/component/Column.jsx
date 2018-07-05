@@ -100,8 +100,24 @@ class Column extends React.Component {
     }
 
     handleOnEditClick() {
-        if (this.state.title !== "")
-            this.setState({editTitle: false});
+        if (this.state.title !== "") {
+            const editColumn = {name: this.state.title};
+            fetch("http://localhost:5000/api/columns/" + this.state.id, {
+            method: 'PUT',
+            mode: 'cors',
+            body: JSON.stringify(editColumn),
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(json) {
+                this.setState({editTitle: false});                
+            }.bind(this));
+        }
     }
 
     //todo componentWillMount load cards from db
@@ -111,7 +127,8 @@ class Column extends React.Component {
 
     onAddButtonConfirmation() {
         if (this.state.value !== "") {
-            const card = { task_type: "Normal", status: this.state._id, overview: this.state.value, details: "" };
+            console.log(this.state.id);
+            const card = { task_type: "Normal", status: this.state.id, overview: this.state.value, details: "" };
             fetch("http://localhost:5000/api/tasks", {
             method: 'POST',
             mode: 'cors',
@@ -125,8 +142,7 @@ class Column extends React.Component {
                 return response.json();
             })
             .then(function(json) {
-                console.log(json);
-                this.state.cards.push({content: this.state.value, id: this.generateUUID()});
+                this.state.cards.push({content: json.overview, id: json._id});
                 this.setState({addingCard: false, value: "", cards: this.state.cards});
             }.bind(this));
 
@@ -143,18 +159,24 @@ class Column extends React.Component {
     }
 
     onCancelButtonConfirmation(){
-            this.setState({addingCard: false, value: "", cards: this.state.cards});
-        
+        this.setState({addingCard: false, value: "", cards: this.state.cards});
     }
 
     deleteTask(id) {
-        this.setState({
-            title: this.state.title,
-            addingCard: this.state.addingCard, 
-            value: this.state.value,
-            editTitle: this.state.editTitle,
-            cards: this.state.cards.filter((card) => card.id !== id)
-        });
+        fetch("http://localhost:5000/api/tasks/" + id, {
+            method: 'DELETE',
+            mode: 'cors',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(json) {
+                this.setState({ cards: this.state.cards.filter((card) => card.id !== id)});
+            }.bind(this));
     }
 
     editTitleMode() {
