@@ -13,7 +13,7 @@ const cardTarget = {
             return;
         }
         const item = monitor.getItem();
-        component.handleDrop({content: item.card.content, id: component.generateUUID()});
+        component.handleDrop(item.card);
         return { text: item.text };
     },
     canDrop(props, monitor) {
@@ -54,6 +54,7 @@ class Column extends React.Component {
         this.onAddButtonConfirmation = this.onAddButtonConfirmation.bind(this);
         this.onCancelButtonConfirmation = this.onCancelButtonConfirmation.bind(this);
         this.deleteTask = this.deleteTask.bind(this);
+        this.localDeleteTask = this.localDeleteTask.bind(this);
         this.editTitleMode = this.editTitleMode.bind(this);
         this.handleOnEditClick = this.handleOnEditClick.bind(this);
         this.onClickDeleteColumn = this.onClickDeleteColumn.bind(this);
@@ -80,16 +81,6 @@ class Column extends React.Component {
                 this.setState({ addingCard: false, value: "", cards: cards });
             }.bind(this));
     }
-
-    generateUUID() {
-        var d = new Date().getTime();
-        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = (d + Math.random()*16)%16 | 0;
-            d = Math.floor(d/16);
-            return (c=='x' ? r : (r&0x3|0x8)).toString(16);
-        });
-        return uuid;
-    };
     
     onChangeTaskToAdd(e) {
         this.setState({value: e.target.value});
@@ -142,7 +133,7 @@ class Column extends React.Component {
                 return response.json();
             })
             .then(function(json) {
-                this.state.cards.push({content: json.overview, id: json._id});
+                this.state.cards.push({content: json.overview, id: json._id, status: this.state.id, details: json.details, taskType: json.task_type});
                 this.setState({addingCard: false, value: "", cards: this.state.cards});
             }.bind(this));
 
@@ -154,8 +145,23 @@ class Column extends React.Component {
     }
 
     handleDrop(card) {
-        this.state.cards.push(card);
-        this.setState({addingCard: false, value: "", cards: this.state.cards});
+        const editStatus = { status: this.state.id };
+        fetch("http://localhost:5000/api/tasks/" + card.id, {
+            method: 'PUT',
+            mode: 'cors',
+            body: JSON.stringify(editStatus),
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(json) {
+                this.state.cards.push(card);
+                this.setState({addingCard: false, value: "", cards: this.state.cards});
+            }.bind(this));
     }
 
     onCancelButtonConfirmation(){
@@ -175,8 +181,12 @@ class Column extends React.Component {
                 return response.json();
             })
             .then(function(json) {
-                this.setState({ cards: this.state.cards.filter((card) => card.id !== id)});
+                this.localDeleteTask(id);
             }.bind(this));
+    }
+
+    localDeleteTask(id) {
+        this.setState({ cards: this.state.cards.filter((card) => card.id !== id)});
     }
 
     editTitleMode() {
@@ -226,7 +236,7 @@ class Column extends React.Component {
                     <div className="card-text">
                         {
                             this.state.cards.map((card) => {
-                                return (<Card card={card} deleteHandler={this.deleteTask} key={card.id}/>);
+                                return (<Card card={card} localDeleteHandler={this.localDeleteTask} deleteHandler={this.deleteTask} key={card.id}/>);
                             })
                         }
                     </div>

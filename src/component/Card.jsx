@@ -8,8 +8,7 @@ import Types from "../constants/types";
 const cardSource = {
     beginDrag(props) {
         const item = {
-            card: props.card,
-            deleteHandler: props.deleteHandler
+            card: props.card
         };
         return item;
     },
@@ -21,7 +20,7 @@ const cardSource = {
         const item = monitor.getItem();
         const dropResult = monitor.getDropResult();
         if (dropResult) {
-            props.deleteHandler(props.card.id);
+            props.localDeleteHandler(props.card.id);
 		}
     }
 };
