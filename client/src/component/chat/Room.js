@@ -16,7 +16,7 @@ export default class Room extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:5000/api/chat/", {
+        fetch("/api/chat/", {
             method: 'GET',
             mode: 'cors',
             headers: {
@@ -34,7 +34,7 @@ export default class Room extends React.Component {
     
     handler(data) {
         const message = { content: data };
-        fetch("http://localhost:5000/api/chat/", {
+        fetch("/api/chat/", {
             method: 'POST',
             mode: 'cors',
             body: JSON.stringify(message),

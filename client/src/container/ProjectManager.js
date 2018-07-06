@@ -15,7 +15,7 @@ class ProjectManagerPage extends React.Component {
   
   //REST API
   componentDidMount() {
-    fetch("http://localhost:5000/api/columns", {
+    fetch("/api/columns", {
       method: 'GET',
       mode: 'cors',
       headers: {
@@ -47,7 +47,7 @@ class ProjectManagerPage extends React.Component {
 
   handleAddList(value) {
       var columnToAdd = { name: value };
-        fetch("http://localhost:5000/api/columns", {
+        fetch("/api/columns", {
             method: 'POST',
             mode: 'cors',
             body: JSON.stringify(columnToAdd),
@@ -66,7 +66,7 @@ class ProjectManagerPage extends React.Component {
   }
 
   handleDeleteColumn(id) {
-    fetch("http://localhost:5000/api/columns/" + id, {
+    fetch("/api/columns/" + id, {
         method: 'DELETE',
         mode: 'cors',
         headers: {
