@@ -63,7 +63,7 @@ class Column extends React.Component {
     
     componentDidMount() {
         if (this.state.id != "")
-            fetch("/api/tasks/" + this.state.id, {
+            fetch("https://salty-tundra-35534.herokuapp.com/api/tasks/" + this.state.id, {
                 method: 'GET',
                 mode: 'cors',
                 headers: {
@@ -81,7 +81,7 @@ class Column extends React.Component {
                     this.setState({ addingCard: false, value: "", cards: cards });
                 }.bind(this));
         else
-            fetch("http://localhost:5000/api/tasks", {
+            fetch("https://salty-tundra-35534.herokuapp.com/api/tasks", {
                 method: 'GET',
                 mode: 'cors',
                 headers: {
@@ -188,7 +188,7 @@ class Column extends React.Component {
     }
 
     deleteTask(id) {
-        fetch("/api/tasks/" + id, {
+        fetch("https://salty-tundra-35534.herokuapp.com/api/tasks/" + id, {
             method: 'DELETE',
             mode: 'cors',
             headers: {

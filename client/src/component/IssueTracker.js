@@ -16,7 +16,7 @@ class IssueTrackerPage extends React.Component{
     }
 
     componentDidMount() {
-        fetch("http://localhost:5000/api/tasks", {
+        fetch("https://salty-tundra-35534.herokuapp.com/api/tasks", {
             method: 'GET',
             mode: 'cors',
             headers: {

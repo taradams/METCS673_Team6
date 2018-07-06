@@ -15,7 +15,7 @@ class ProjectManagerPage extends React.Component {
   
   //REST API
   componentDidMount() {
-    fetch("/api/columns", {
+    fetch("https://salty-tundra-35534.herokuapp.com/api/columns", {
       method: 'GET',
       mode: 'cors',
       headers: {
@@ -47,7 +47,7 @@ class ProjectManagerPage extends React.Component {
 
   handleAddList(value) {
       var columnToAdd = { name: value };
-        fetch("/api/columns", {
+        fetch("https://salty-tundra-35534.herokuapp.com/api/columns", {
             method: 'POST',
             mode: 'cors',
             body: JSON.stringify(columnToAdd),
@@ -66,7 +66,7 @@ class ProjectManagerPage extends React.Component {
   }
 
   handleDeleteColumn(id) {
-    fetch("/api/columns/" + id, {
+    fetch("https://salty-tundra-35534.herokuapp.com/api/columns/" + id, {
         method: 'DELETE',
         mode: 'cors',
         headers: {

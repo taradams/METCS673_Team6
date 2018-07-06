@@ -16,7 +16,7 @@ export default class Room extends React.Component {
     }
 
     componentDidMount() {
-        fetch("/api/chat/", {
+        fetch("https://salty-tundra-35534.herokuapp.com/api/chat/", {
             method: 'GET',
             mode: 'cors',
             headers: {
@@ -34,7 +34,7 @@ export default class Room extends React.Component {
     
     handler(data) {
         const message = { content: data };
-        fetch("/api/chat/", {
+        fetch("https://salty-tundra-35534.herokuapp.com/api/chat/", {
             method: 'POST',
             mode: 'cors',
             body: JSON.stringify(message),
