@@ -13,6 +13,8 @@ class IssueTrackerPage extends React.Component{
           ]
         };
         this.createNewIssue = this.createNewIssue.bind(this);
+        // this.editIssueTitle = this.editIssueTitle.bind(this);
+        // this.editIssueDescription = this.editIssueDescription.bind(this);
     }
 
     componentDidMount() {
