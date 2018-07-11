@@ -67,7 +67,7 @@ class Card extends React.Component {
     render() {
         const { isDragging, connectDragSource } = this.props
         const toRender = !isDragging ? 
-            (<div className="card task box">
+            (<div className="card">
             <div className="card-body">
                 {
                     this.props.card.content
