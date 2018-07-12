@@ -38,7 +38,7 @@ class IssueTrackerPage extends React.Component{
 
     createNewIssue(title, description){
         const task = { task_type: "Bug", overview: title, details: description };
-        fetch("http://localhost:5000/api/tasks/", {
+        fetch("https://salty-tundra-35534.herokuapp.com/api/tasks", {
             method: 'POST',
             mode: 'cors',
             body: JSON.stringify(task),
