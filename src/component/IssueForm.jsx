@@ -18,16 +18,12 @@ class IssueForm extends Component{
         this.setState({
             titleInput: e.target.value
         });
-        
-        // console.log(this.state.value);
     }
 
     handleDescriptionChange(e){
         this.setState({
             descriptionInput: e.target.value
         });
-        
-        // console.log(this.state.value);
     }
 
     createNewIssueBtn(){

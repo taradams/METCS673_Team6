@@ -63,7 +63,6 @@ class Card extends React.Component {
         }
     }
 
-    //props 
     render() {
         const { isDragging, connectDragSource } = this.props
         const toRender = !isDragging ? 
