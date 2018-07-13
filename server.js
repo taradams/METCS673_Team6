@@ -45,7 +45,7 @@ app.get('/api', (req, res) => {
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb://elmodb_user:b6pS3sgLJYh1@ds235461.mlab.com:35461/elmodb';
+var mongoDB = 'mongodb://elmodev_user:1h7f5KLPEhVn@ds123151.mlab.com:23151/elmodb_dev';
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
@@ -76,10 +76,10 @@ app.use(function (req, res, next) {
           next();
       });
 
-/*
+
 app.get("*", (req, res) => {  
         res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-      });*/
+      });
 
 //start server
 app.listen(port, () => console.log(`Listening on port ${port}`));
