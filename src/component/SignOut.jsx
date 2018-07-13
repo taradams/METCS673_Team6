@@ -6,7 +6,7 @@ class SignOutButton extends React.Component {
   render() {
     console.log(this.props);
     return (
-      <button type="button"onClick={this.props.auth.doSignOut}>
+      <button type="button" onClick={auth.doSignOut}>
         Sign Out
       </button>
     )
