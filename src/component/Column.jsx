@@ -6,7 +6,7 @@ import {
 	DropTarget
 } from 'react-dnd';
 import Types from "../constants/types";
-import { receiveTaskUpdate, onTaskUpdate } from '../api/socket';
+import { receiveUpdate, onUpdate } from '../api/socket';
 import { getTaskByColumnID, getTaskWithoutColumnID, addCard, deleteCard, editCard } from '../api/cards';
 import { editColumnTitle } from '../api/columns';
 
@@ -64,7 +64,7 @@ class Column extends React.Component {
         this.hasCard = this.hasCard.bind(this);
         this.retrieveTask = this.retrieveTask.bind(this);
         
-        receiveTaskUpdate(() => this.retrieveTask());
+        receiveUpdate(() => this.retrieveTask());
     }
 
     retrieveTask() {
@@ -100,7 +100,7 @@ class Column extends React.Component {
         if (this.state.title !== "") {
             const editColumn = {name: this.state.title};
             editColumnTitle(this.state.id, editColumn, function(json) {
-                onTaskUpdate();
+                onUpdate();
                 this.setState({editTitle: false});                
             }.bind(this));
         }
@@ -117,7 +117,7 @@ class Column extends React.Component {
 
             addCard(card, function(json) {
                 this.state.cards.push({content: json.overview, id: json._id, status: this.state.id, details: json.details, taskType: json.task_type});
-                onTaskUpdate(); //emit event to Socket.io
+                onUpdate(); //emit event to Socket.io
                 this.setState({addingCard: false, value: "", cards: this.state.cards});
             }.bind(this));
 
@@ -133,7 +133,7 @@ class Column extends React.Component {
             const editStatus = { status: this.state.id };
             editCard(this.state.id, editStatus, function(json) {
                     this.state.cards.push(card);
-                    onTaskUpdate();
+                    onUpdate();
                     this.setState({addingCard: false, value: "", cards: this.state.cards});
                 }.bind(this));
         }
@@ -145,7 +145,7 @@ class Column extends React.Component {
 
     deleteTask(id) {
         deleteCard(id, function(json) {
-            onTaskUpdate();
+            onUpdate();
             this.localDeleteTask(id);
         }.bind(this));
     }
