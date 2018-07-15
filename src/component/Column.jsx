@@ -6,6 +6,9 @@ import {
 	DropTarget
 } from 'react-dnd';
 import Types from "../constants/types";
+import { receiveTaskUpdate, onTaskUpdate } from '../api/socket';
+import { getTaskByColumnID, getTaskWithoutColumnID, addCard, deleteCard, editCard } from '../api/cards';
+import { editColumnTitle } from '../api/columns';
 
 const cardTarget = {
     drop(props, monitor, component) {
@@ -59,45 +62,30 @@ class Column extends React.Component {
         this.handleOnEditClick = this.handleOnEditClick.bind(this);
         this.onClickDeleteColumn = this.onClickDeleteColumn.bind(this);
         this.hasCard = this.hasCard.bind(this);
+        this.retrieveTask = this.retrieveTask.bind(this);
+        
+        receiveTaskUpdate(() => this.retrieveTask());
     }
-    
-    componentDidMount() {
+
+    retrieveTask() {
         if (this.state.id != "")
-            fetch("http://localhost:5000/api/tasks/" + this.state.id, {
-                method: 'GET',
-                mode: 'cors',
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8",
-                    'Access-Control-Allow-Origin': '*'
-                }
-            })
-                .then(function(response) {
-                    return response.json();
-                })
-                .then(function(json) {
-                    const cards = json.map((task) => {
-                        return { id: task._id, content: task.overview, status: task.status, details: task.details };
-                    });
-                    this.setState({ addingCard: false, value: "", cards: cards });
-                }.bind(this));
+            getTaskByColumnID(this.state.id, function(json) {
+                const cards = json.map((task) => {
+                    return { id: task._id, content: task.overview, status: task.status, details: task.details };
+                });
+                this.setState({ addingCard: false, value: "", cards: cards });
+            }.bind(this));
         else
-            fetch("http://localhost:5000/api/tasks", {
-                method: 'GET',
-                mode: 'cors',
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8",
-                    'Access-Control-Allow-Origin': '*'
-                }
-            })
-                .then(function(response) {
-                    return response.json();
-                })
-                .then(function(json) {
+            getTaskWithoutColumnID(function(json) {
                     const cards = json.map((task) => {
                         return { id: task._id, content: task.overview, status: task.status, details: task.details };
                     });
                     this.setState({ addingCard: false, value: "", cards: cards });
                 }.bind(this));
+    }
+
+    componentDidMount() {
+        this.retrieveTask();
     }
     
     onChangeTaskToAdd(e) {
@@ -111,19 +99,8 @@ class Column extends React.Component {
     handleOnEditClick() {
         if (this.state.title !== "") {
             const editColumn = {name: this.state.title};
-            fetch("http://localhost:5000/api/columns/" + this.state.id, {
-            method: 'PUT',
-            mode: 'cors',
-            body: JSON.stringify(editColumn),
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-                'Access-Control-Allow-Origin': '*'
-            }
-        })
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(json) {
+            editColumnTitle(this.state.id, editColumn, function(json) {
+                onTaskUpdate();
                 this.setState({editTitle: false});                
             }.bind(this));
         }
@@ -137,20 +114,10 @@ class Column extends React.Component {
     onAddButtonConfirmation() {
         if (this.state.value !== "") {
             const card = { task_type: "Normal", status: this.state.id, overview: this.state.value, details: "" };
-            fetch("http://localhost:5000/api/tasks", {
-            method: 'POST',
-            mode: 'cors',
-            body: JSON.stringify(card),
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-                'Access-Control-Allow-Origin': '*'
-            }
-        })
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(json) {
+
+            addCard(card, function(json) {
                 this.state.cards.push({content: json.overview, id: json._id, status: this.state.id, details: json.details, taskType: json.task_type});
+                onTaskUpdate(); //emit event to Socket.io
                 this.setState({addingCard: false, value: "", cards: this.state.cards});
             }.bind(this));
 
@@ -164,20 +131,9 @@ class Column extends React.Component {
     handleDrop(card) {
         if (this.state.id != "") {
             const editStatus = { status: this.state.id };
-            fetch("http://localhost:5000/api/tasks/" + card.id, {
-                method: 'PUT',
-                mode: 'cors',
-                body: JSON.stringify(editStatus),
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8",
-                    'Access-Control-Allow-Origin': '*'
-                }
-            })
-                .then(function(response) {
-                    return response.json();
-                })
-                .then(function(json) {
+            editCard(this.state.id, editStatus, function(json) {
                     this.state.cards.push(card);
+                    onTaskUpdate();
                     this.setState({addingCard: false, value: "", cards: this.state.cards});
                 }.bind(this));
         }
@@ -188,20 +144,10 @@ class Column extends React.Component {
     }
 
     deleteTask(id) {
-        fetch("http://localhost:5000/api/tasks/" + id, {
-            method: 'DELETE',
-            mode: 'cors',
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-                'Access-Control-Allow-Origin': '*'
-            }
-        })
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(json) {
-                this.localDeleteTask(id);
-            }.bind(this));
+        deleteCard(id, function(json) {
+            onTaskUpdate();
+            this.localDeleteTask(id);
+        }.bind(this));
     }
 
     localDeleteTask(id) {
