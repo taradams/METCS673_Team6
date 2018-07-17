@@ -21,7 +21,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:true }));
 app.use(cors());
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client','build')));
 
 
 
@@ -75,6 +76,9 @@ app.use(function (req, res, next) {
           next();
       });
 
+app.get("*", (req, res) => {  
+        res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+      });      
 
 //start server
 app.listen(port, () => console.log(`Listening on port ${port}`));
