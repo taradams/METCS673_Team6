@@ -120,16 +120,16 @@ handleOnEditClick() {
             <div>
               <textarea 
               className="modal-edit-title" 
-              placeholder={cardTitle} 
-              value={this.state.titleInput} 
-              onChange={this.handleTitleChange}/>
+              // placeholder={cardTitle} 
+              // value={this.state.titleInput} 
+              onChange={this.handleTitleChange}>{cardTitle}</textarea>
             </div>
             <div>
               <textarea 
               className="modal-edit-description" 
-              placeholder={cardDescription} 
-              value={this.state.descriptionInput} 
-              onChange={this.handleDescriptionChange}/>
+              // placeholder={cardDescription} 
+              // value={this.state.descriptionInput} 
+              onChange={this.handleDescriptionChange}>{cardDescription}</textarea>
             </div>
             <div>card id: {cardID} </div>
             <button type="button" className="submitBtn" onClick={this.handleOnEditClick}>Submit</button>
