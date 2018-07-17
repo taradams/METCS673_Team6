@@ -1,9 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
+import './Navigation.css'
 
 import SignOutButton from '../component/SignOut';
 import * as routes from '../constants/routes';
+
 
 class Navigation extends React.Component {
 
