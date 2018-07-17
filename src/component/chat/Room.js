@@ -52,7 +52,7 @@ export default class Room extends React.Component {
     render() {
         const chat_log = this.state.chat_log.map((message,i) => {
             return (
-		<Message key = {message._id} text = {message.content}/>
+		<Message key = {message._id} message = {message}/>
 	    );
 	});
 	return (
