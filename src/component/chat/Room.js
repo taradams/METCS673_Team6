@@ -18,7 +18,7 @@ export default class Room extends React.Component {
         this.getMessages = this.getMessages.bind(this);
         receiveUpdate(() => this.getMessages());
     }
-
+ 
     getMessages() {
         retrieveMessages(function(json) {
             console.log(json);
@@ -28,6 +28,8 @@ export default class Room extends React.Component {
 
     componentDidMount() {
         this.getMessages();
+	const objDiv = document.getElementById('chat_messages');
+	objDiv.scrollTop = objDiv.scrollHeight;
     }
     
     handler(data) {
@@ -38,24 +40,29 @@ export default class Room extends React.Component {
             this.setState({ chat_log: this.state.chat_log }); 
         }.bind(this)); 
     }
-
+    
+    componentDidUpdate() {
+        // get the messagelist container and set the scrollTop to the height of the container
+        const objDiv = document.getElementById('chat_messages');
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+    
+    
+    
     render() {
-        return (
+        const chat_log = this.state.chat_log.map((message,i) => {
+            return (
+		<Message key = {message._id} text = {message.content}/>
+	    );
+	});
+	return (
             <div>
                 <div className="chat_title">
                     {this.state.title}
                 </div>
-                <div className="chat_log">
-                    {
-                        this.state.chat_log.map((message) => {
-                            return (
-                                <div>
-                                    <Message key={message._id} text={message.content} />
-                                </div>
-                            );
-                        })
-                    }
-                </div>
+		<div className = 'chat_log' id = 'chat_messages'>
+		    {chat_log}
+		</div>
                 <div>
                     <Poster handlerFromParent={this.handler} />
                 </div>
