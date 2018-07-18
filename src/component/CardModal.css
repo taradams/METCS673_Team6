@@ -1,0 +1,70 @@
+  .modalOverlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    opacity: 1;
+    animation: show .5s ease;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+
+
+  .modal-s {
+    width: 70%;
+    height: 60%;
+    background-color: #fff;
+    box-Shadow: 0, 0, 0.625rem, rgba(0, 0, 0, 0.2);
+  }
+
+  .closeButton {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: #fff;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+    outline: 0;
+    box-Shadow: 0, 0, 0.625rem, rgba(0, 0, 0, 0.2);
+  }
+
+  .modal-edit-title {
+    width: 400px;
+    height: 50px;
+    margin: 10px;
+    /* float: left; */
+    }
+
+  .modal-edit-description {
+    width: 500px;
+    height: 300px;
+    /* float: left; */
+  }
+
+  .modalContent h1 {
+    text-align: center;
+    /* padding: 10px; */
+  }
+
+  .submitBtn {
+    color: #fff;
+    background-color: #5cb85c;
+    font-family: inherit;
+    border-radius: 0.3rem;
+    border-color: #4cae4c;
+  }
+  
+
+
+
