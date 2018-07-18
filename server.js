@@ -2,10 +2,12 @@ var createError = require('http-errors');
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
+var http = require('http');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
 var cors = require('cors')
+const socketIO = require('socket.io');
 
 //routes directory
 var indexRouter = require('./routes/index');
@@ -81,6 +83,19 @@ app.get("*", (req, res) => {
       });      
 
 //start server
-app.listen(port, () => console.log(`Listening on port ${port}`));
 
+var server = http.createServer(app);
+
+const io = socketIO.listen(server);
+console.log('Socket listening');
+
+io.on('connection', (client) => {
+  console.log('client connected');
+  client.on('onUpdate', (interval) => {
+    client.broadcast.emit('receiveUpdate');
+  });
+
+});
+
+server.listen(port, () => console.log(`Listening on port ${port}`));
 
