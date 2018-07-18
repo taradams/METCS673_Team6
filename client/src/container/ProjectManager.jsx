@@ -1,6 +1,7 @@
 import React from 'react';
 import Columns from './Columns';
 import Column from '../component/Column';
+import './ProjectManager.css'
 
 class ProjectManagerPage extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class ProjectManagerPage extends React.Component {
   
   //REST API
   componentDidMount() {
-    fetch("https://salty-tundra-35534.herokuapp.com/api/columns", {
+    fetch("http://localhost:5000/api/columns", {
       method: 'GET',
       mode: 'cors',
       headers: {
@@ -47,7 +48,7 @@ class ProjectManagerPage extends React.Component {
 
   handleAddList(value) {
       var columnToAdd = { name: value };
-        fetch("https://salty-tundra-35534.herokuapp.com/api/columns", {
+        fetch("http://localhost:5000/api/columns", {
             method: 'POST',
             mode: 'cors',
             body: JSON.stringify(columnToAdd),
@@ -66,7 +67,7 @@ class ProjectManagerPage extends React.Component {
   }
 
   handleDeleteColumn(id) {
-    fetch("https://salty-tundra-35534.herokuapp.com/api/columns/" + id, {
+    fetch("http://localhost:5000/api/columns/" + id, {
         method: 'DELETE',
         mode: 'cors',
         headers: {
@@ -85,13 +86,13 @@ class ProjectManagerPage extends React.Component {
   render() {
     return (
     <div>
-      <h1>Project Manager Board</h1> 
+      <h1 className='pageTitle'>Project Manager Board</h1> 
           <div className="row"> 
             <Columns columns={this.state.columns} handleDeleteColumn={this.handleDeleteColumn} handleAddList={this.handleAddList}/> 
           </div>
-      <h1>Issue Manager Board</h1>
+      <h1 className='pageTitle'>Issue Manager Board</h1>
         <div className="row">
-            <div className="container">
+            <div className="container" style={{width:"fit-content"}}>
             <div className="Columns">
                 <div className="Column">
                     <Column title="Issues" id=""/>

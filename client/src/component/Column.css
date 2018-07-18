@@ -16,6 +16,66 @@
     border-radius: 10px;      
 }
 
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: normal;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: inherit;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    max-width:200px;
+}
+
+.title_btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.42857143;
+    text-align: left;
+    white-space: normal;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: inherit;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    width:250px;
+}
+
+.title_btn:hover {
+    background-color: grey;
+}
+
+.btn-success {
+    color: #000;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+.card_title {
+
+}
+
 .column {
     margin-top: 0px;
 }
@@ -24,6 +84,8 @@
     background-color: red;
 }
 
+.title {
+}
 
 .AddFooter {
     margin-left: 10px;

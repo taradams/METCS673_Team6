@@ -1,19 +1,20 @@
-
-#Columns {
-    overflow-x: scroll;
+.Columns {
+  flex-wrap: nowrap;
+  display: flex;
+  overflow-x: scroll;
+  margin-left: 20px;
+  margin-right: 20px;
 }
-
 .container {
+    flex: 0 0 300px;
+    height: fit-content;
     margin: 20px;
-    display: inline-block;
     padding: 0px;
-    display: block; /*changed from inline to block*/
-    float: left;
+    float:left;
     margin-top:80px;
-    margin-right: 30px;
-    margin-left: 30px;
-    width: 300px;
+    margin-right: 10px;
+    margin-left: 10px;
     background-color: lightgrey;
-    border-radius: 5px;
+    border-radius: 10px;
     vertical-align: top;
 }

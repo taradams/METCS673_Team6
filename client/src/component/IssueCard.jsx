@@ -2,9 +2,6 @@ import React from 'react';
 import './IssueCard.css'
 
 class IssueCard extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return(

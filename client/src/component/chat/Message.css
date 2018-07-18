@@ -4,4 +4,18 @@
     word-wrap: break-word;
     font-family: arial;
     font-size: 18px;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+}
+
+.meta {
+    background-color: lightblue;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    font-family: arial;
+    font-size: 12px;
+    text-align: left;
+    padding: 0;
+    margin: 0;
 }

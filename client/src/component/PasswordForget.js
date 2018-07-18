@@ -1,24 +1,13 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 
 import { auth } from '../firebase';
-
-const PasswordForgetPage = () =>
-  <div>
-    <h1>PasswordForget</h1>
-    <PasswordForgetForm />
-  </div>
+import { INITIAL_STATE } from '../reducers/PasswordForget';
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
 });
 
-const INITIAL_STATE = {
-  email: '',
-  error: null,
-};
-
-class PasswordForgetForm extends Component {
+class PasswordForgetForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -65,14 +54,5 @@ class PasswordForgetForm extends Component {
   }
 }
 
-const PasswordForgetLink = () =>
-  <p>
-    <Link to="/pw-forget">Forgot Password?</Link>
-  </p>
 
-export default PasswordForgetPage;
-
-export {
-  PasswordForgetForm,
-  PasswordForgetLink,
-};
+export default PasswordForgetForm;
