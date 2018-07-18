@@ -25,6 +25,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'client','build')));
 
 
+
 //use sessions for tracking logins
 app.use(session({
   secret: 'guglielmo maccheroni',
@@ -36,7 +37,7 @@ app.use(session({
 app.use('/api', indexRouter);
 
 //test api
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
   res.send('API working!');
 });
 
@@ -52,10 +53,9 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // catch 404
-/*
 app.use((req, res, next) => {
   res.status(404).send('<h2 align=center>Page Not Found!</h2>');
-}); */
+});
 
 app.use(function (req, res, next) {
   
@@ -76,10 +76,9 @@ app.use(function (req, res, next) {
           next();
       });
 
-
 app.get("*", (req, res) => {  
         res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-      });
+      });      
 
 //start server
 app.listen(port, () => console.log(`Listening on port ${port}`));
