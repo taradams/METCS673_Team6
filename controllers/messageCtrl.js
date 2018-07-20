@@ -5,7 +5,7 @@ var Message = require('./../models/Message');
 //display messages
 exports.display_messages = function(req, res) {
     //looks at our Message Schema
-    Message.find(function(err, messages) {
+    Message.find().sort({'created_date':1}).exec(function(err, messages) {
       if (err)
         res.send(err);
       //responds with a json object of our database comments.
