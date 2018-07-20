@@ -2,10 +2,12 @@ var createError = require('http-errors');
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
+var http = require('http');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
 var cors = require('cors')
+const socketIO = require('socket.io');
 
 //routes directory
 var indexRouter = require('./routes/index');
@@ -25,6 +27,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'client','build')));
 
 
+
 //use sessions for tracking logins
 app.use(session({
   secret: 'guglielmo maccheroni',
@@ -36,9 +39,10 @@ app.use(session({
 app.use('/api', indexRouter);
 
 //test api
+
 app.get('/api', (req, res) => {
   res.send('API working!');
-});
+}); 
 
 
 
@@ -52,10 +56,9 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // catch 404
-/*
 app.use((req, res, next) => {
   res.status(404).send('<h2 align=center>Page Not Found!</h2>');
-}); */
+});
 
 app.use(function (req, res, next) {
   
@@ -76,12 +79,24 @@ app.use(function (req, res, next) {
           next();
       });
 
-      
 app.get("*", (req, res) => {  
         res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-      });
+      });      
 
 //start server
-app.listen(port, () => console.log(`Listening on port ${port}`));
 
+var server = http.createServer(app);
+
+const io = socketIO.listen(server);
+console.log('Socket listening');
+
+io.on('connection', (client) => {
+  console.log('client connected');
+  client.on('onUpdate', (interval) => {
+    client.broadcast.emit('receiveUpdate');
+  });
+
+});
+
+server.listen(port, () => console.log(`Listening on port ${port}`));
 

@@ -1,30 +1,15 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-
-import { SignUpLink } from './SignUp';
+import React from 'react';
 import { PasswordForgetLink } from './PasswordForget';
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
-
-const SignInPage = ({ history }) =>
-  <div>
-    <h1>SignIn</h1>
-    <SignInForm history={history} />
-    <PasswordForgetLink />
-    <SignUpLink />
-  </div>
+import { INITIAL_STATE } from '../reducers/SignIn';
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
 });
 
-const INITIAL_STATE = {
-  email: '',
-  password: '',
-  error: null,
-};
 
-class SignInForm extends Component {
+class SignInForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -88,8 +73,5 @@ class SignInForm extends Component {
   }
 }
 
-export default withRouter(SignInPage);
 
-export {
-  SignInForm,
-};
+export default SignInForm;

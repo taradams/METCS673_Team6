@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 
 import Columns from './container/Columns';
-import Page from './component/Page';
+import Page from './container/Page';
+
 class App extends Component {
 
   render() {
