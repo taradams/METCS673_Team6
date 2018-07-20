@@ -138,6 +138,7 @@ class Column extends React.Component {
                 }.bind(this));
         }
     }
+    
 
     onCancelButtonConfirmation(){
         this.setState({addingCard: false, value: "", cards: this.state.cards});
