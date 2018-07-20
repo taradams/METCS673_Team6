@@ -31,10 +31,11 @@ class IssueCard extends React.Component {
             <p>{this.props.issue.details}</p>
             <button
                 type="button"
-                className="modalButton"
+                className="issueModalButton"
                 onClick={() => this.handleToggleModal()}
                 >
-                Modal
+                {/* Modal */}
+                <i class="fas fa-edit"></i>
                 </button>
                 {showModal &&
                     <IssueCardModal 

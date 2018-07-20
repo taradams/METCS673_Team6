@@ -8,7 +8,6 @@ import CardModal from './CardModal'; // Import SimpleModal component
 import PropTypes from 'prop-types';
 
 
-
 const cardSource = {
     beginDrag(props) {
         const item = {
@@ -96,10 +95,11 @@ class Card extends React.Component {
                 {/* new modal stuff */}
                 <button
                     type="button"
-                    className="modalButton"
+                    className="cardModalButton"
                     onClick={() => this.handleToggleModal()}
                 >
-                Modal
+                {/* Modal */}
+                <i class="fas fa-edit"></i>
                 </button>
                 {showModal &&
                     <CardModal 

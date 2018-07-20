@@ -1,11 +1,22 @@
 .issue-title{
     width: 500px;
-    height: 20px;
+    height: 30px;
     margin: 20px;
+    font-size: 15px;
+    resize: none;
 }
 
 .issue-description{
     width: 700px;
     height: 250px;
     font-size: 15px;
+    resize: none;
+}
+
+.submitNewIssueBtn {
+    color: #fff;
+    background: #5aac44;
+    /* text-shadow: #519839; */
+    border-color: #5aac44;
+    border-radius: 0.3rem;
 }

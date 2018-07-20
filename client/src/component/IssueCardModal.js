@@ -87,6 +87,9 @@ handleOnEditClick() {
       .then(function(json) {
           this.setState({titleInput: ""});                
       }.bind(this));
+
+      alert("Submitted!");
+
   }
 
 

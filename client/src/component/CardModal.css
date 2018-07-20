@@ -23,6 +23,7 @@
     height: 60%;
     background-color: #fff;
     box-Shadow: 0, 0, 0.625rem, rgba(0, 0, 0, 0.2);
+    text-align: center;
   }
 
   .closeButton {
@@ -43,19 +44,23 @@
     width: 400px;
     height: 50px;
     margin: 10px;
+    text-align: left;
+    resize: none;
     /* float: left; */
     }
 
   .modal-edit-description {
     width: 500px;
     height: 300px;
+    text-align: left;
+    resize: none;
     /* float: left; */
   }
 
-  .modalContent h1 {
+.modalContent h1 {
     text-align: center;
-    /* padding: 10px; */
-  }
+    /* padding: 10px;  */
+} 
 
   .submitBtn {
     color: #fff;
