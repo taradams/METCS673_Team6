@@ -46,8 +46,6 @@ export default class Room extends React.Component {
         objDiv.scrollTop = objDiv.scrollHeight;
     }
     
-    
-    
     render() {
         const chat_log = this.state.chat_log.map((message,i) => {
             return (
