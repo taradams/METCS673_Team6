@@ -11,7 +11,7 @@
     background-color: lightgrey;
     width: 50vw;
     height: 80vh;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
 }
 
 .chat_log {

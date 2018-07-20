@@ -16,7 +16,7 @@ class IssueTrackerPage extends React.Component{
     }
 
     componentDidMount() {
-        fetch("http://localhost:5000/api/tasks", {
+        fetch("/api/tasks", {
             method: 'GET',
             mode: 'cors',
             headers: {
@@ -38,7 +38,7 @@ class IssueTrackerPage extends React.Component{
 
     createNewIssue(title, description){
         const task = { task_type: "Bug", overview: title, details: description };
-        fetch("http://localhost:5000/api/tasks/", {
+        fetch("/api/tasks/", {
             method: 'POST',
             mode: 'cors',
             body: JSON.stringify(task),

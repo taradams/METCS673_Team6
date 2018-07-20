@@ -1,5 +1,5 @@
 function getTaskByColumnID(id, callback) {
-    fetch("http://localhost:5000/api/tasks/" + id, {
+    fetch("/api/tasks/" + id, {
         method: 'GET',
         mode: 'cors',
         headers: {
@@ -16,7 +16,7 @@ function getTaskByColumnID(id, callback) {
 }
 
 function getTaskWithoutColumnID(callback) {
-    fetch("http://localhost:5000/api/tasks/", {
+    fetch("/api/tasks/", {
         method: 'GET',
         mode: 'cors',
         headers: {
@@ -33,7 +33,7 @@ function getTaskWithoutColumnID(callback) {
 }
 
 function addCard(card, callback) {
-    fetch("http://localhost:5000/api/tasks", {
+    fetch("/api/tasks", {
         method: 'POST',
         mode: 'cors',
         body: JSON.stringify(card),
@@ -51,7 +51,7 @@ function addCard(card, callback) {
 }
 
 function deleteCard(id, callback) {
-    fetch("http://localhost:5000/api/tasks/" + id, {
+    fetch("/api/tasks/" + id, {
         method: 'DELETE',
         mode: 'cors',
         headers: {
@@ -68,7 +68,7 @@ function deleteCard(id, callback) {
 }
 
 function editCard(id, values, callback) {
-    fetch("http://localhost:5000/api/tasks/" + id, {
+    fetch("/api/tasks/" + id, {
         method: 'PUT',
         mode: 'cors',
         body: JSON.stringify(values),

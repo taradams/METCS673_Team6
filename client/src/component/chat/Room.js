@@ -21,7 +21,6 @@ export default class Room extends React.Component {
  
     getMessages() {
         retrieveMessages(function(json) {
-            console.log(json);
             this.setState({ chat_log: json });
         }.bind(this));
     }
@@ -46,8 +45,6 @@ export default class Room extends React.Component {
         const objDiv = document.getElementById('chat_messages');
         objDiv.scrollTop = objDiv.scrollHeight;
     }
-    
-    
     
     render() {
         const chat_log = this.state.chat_log.map((message,i) => {

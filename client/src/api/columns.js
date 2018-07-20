@@ -1,5 +1,5 @@
 function editColumnTitle(id, value, callback) {
-    fetch("http://localhost:5000/api/columns/" + id, {
+    fetch("/api/columns/" + id, {
         method: 'PUT',
         mode: 'cors',
         body: JSON.stringify(value),

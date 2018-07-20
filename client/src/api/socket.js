@@ -1,5 +1,5 @@
 import openSocket from 'socket.io-client/dist/socket.io';
-const  socket = openSocket('http://localhost:5000/');
+const  socket = openSocket('/');
 
 function receiveUpdate(cb) {
     socket.on('receiveUpdate', () => cb());

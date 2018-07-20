@@ -1,5 +1,5 @@
 function sendMessage(message, callback) {
-    fetch("http://localhost:5000/api/chat/", {
+    fetch("/api/chat/", {
         method: 'POST',
         mode: 'cors',
         body: JSON.stringify(message),
@@ -17,7 +17,7 @@ function sendMessage(message, callback) {
 }
 
 function retrieveMessages(callback) {
-    fetch("http://localhost:5000/api/chat/", {
+    fetch("/api/chat/", {
         method: 'GET',
         mode: 'cors',
         headers: {

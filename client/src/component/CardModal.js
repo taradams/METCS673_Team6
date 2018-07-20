@@ -84,7 +84,7 @@ handleDescriptionChange(e){
 
 handleOnEditClick() {
       const editTask = {overview: this.state.titleInput, details: this.state.descriptionInput};
-      fetch("http://localhost:5000/api/tasks/" + this.props.cardID, {
+      fetch("/api/tasks/" + this.props.cardID, {
       method: 'PUT',
       mode: 'cors',
       body: JSON.stringify(editTask),
