@@ -39,10 +39,10 @@ app.use(session({
 app.use('/api', indexRouter);
 
 //test api
-/*
-app.get('/', (req, res) => {
+
+app.get('/api', (req, res) => {
   res.send('API working!');
-}); */
+}); 
 
 
 
