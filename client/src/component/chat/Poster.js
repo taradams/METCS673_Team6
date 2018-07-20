@@ -12,7 +12,8 @@ export default class Poster extends React.Component {
 
     submitHandler(e) {
         e.preventDefault();
-        this.props.handlerFromParent(this.state.value);
+        if (this.state.value !== "")
+            this.props.handlerFromParent(this.state.value);
         this.setState(
             { value: '' }
         );

@@ -21,7 +21,6 @@ export default class Room extends React.Component {
  
     getMessages() {
         retrieveMessages(function(json) {
-            console.log(json);
             this.setState({ chat_log: json });
         }.bind(this));
     }
