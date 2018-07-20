@@ -131,7 +131,7 @@ class Column extends React.Component {
     handleDrop(card) {
         if (this.state.id != "") {
             const editStatus = { status: this.state.id };
-            editCard(this.state.id, editStatus, function(json) {
+            editCard(card.id, editStatus, function(json) {
                     this.state.cards.push(card);
                     onUpdate();
                     this.setState({addingCard: false, value: "", cards: this.state.cards});
