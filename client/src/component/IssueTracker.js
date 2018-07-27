@@ -30,7 +30,7 @@ class IssueTrackerPage extends React.Component{
         .then(function(json) {
             this.setState({
                 issues: json.map((issue) => {
-                    return { id: issue._id, title: issue.overview, details: issue.details };
+                    return { id: issue._id, title: issue.overview, details: issue.details, user: issue.assignee };
                 })
             });
         }.bind(this));
