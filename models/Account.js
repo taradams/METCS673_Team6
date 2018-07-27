@@ -8,7 +8,6 @@ var AccountSchema = new Schema(
     first_name: {type: String, required: true, max: 100},
     last_name: {type: String, required: true, max: 100},
     email: {type: String, required:true, max: 100},
-    username: {type:String, required: true, min:3, max:35},
     password: {type: String, required:true, min: 8, max:24}
   }
 );
