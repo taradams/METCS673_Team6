@@ -11,6 +11,8 @@ class IssueCardModal extends Component {
       titleInput: "",
       descriptionInput: "",
       idInput: "",
+      psuedoUsers: ["Alexis", "Fred", "Joey", "Rob", "Tara"],
+      selectedUserValue: "",
     }
 
     this.handleKeyUp = this.handleKeyUp.bind(this);
@@ -18,6 +20,7 @@ class IssueCardModal extends Component {
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleOnEditClick = this.handleOnEditClick.bind(this);
+    this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
   componentDidMount() {
@@ -71,11 +74,11 @@ handleDescriptionChange(e){
 }
 
 handleOnEditClick() {
-      const editTaskTitle = {overview: this.state.titleInput, details: this.state.descriptionInput};
+      const editTask = {overview: this.state.titleInput, details: this.state.descriptionInput, assignee: this.state.selectedUserValue};
       fetch("/api/tasks/" + this.props.cardID, {
       method: 'PUT',
       mode: 'cors',
-      body: JSON.stringify(editTaskTitle),
+      body: JSON.stringify(editTask),
       headers: {
           "Content-Type": "application/json; charset=utf-8",
           'Access-Control-Allow-Origin': '*'
@@ -85,13 +88,46 @@ handleOnEditClick() {
           return response.json();
       })
       .then(function(json) {
-          this.setState({titleInput: ""});                
+          this.setState({titleInput: this.state.titleInput, descriptionInput: this.state.descriptionInput, selectedValue: this.state.selectedUserValue});                
+          // this.hanldeEditConfirmation();
+          this.handleEditTitleConfirmation();
+          this.handleEditDescriptionConfirmation();
+          this.handleAssignUserConfirmation();
       }.bind(this));
 
-      alert("Submitted!");
-
+      // alert("Submitted!");
   }
 
+  handleSelectChange(e){
+    this.setState({
+      selectedUserValue: e.target.value
+    });
+    // console.log(this.state.selectedValue);
+  }
+
+  hanldeEditConfirmation(){
+    if(this.props.onEditIssue || this.state.titleInput !== "" || this.state.descriptionInput !== ""){
+      this.props.onEditIssue(this.state.titleInput, this.state.descriptionInput, this.state.selectedValue);
+    }
+  }
+
+  handleEditTitleConfirmation(){
+    if(this.props.onEditIssueTitle && this.state.titleInput !== ""){
+      this.props.onEditIssueTitle(this.state.titleInput);
+    }
+  }
+
+  handleEditDescriptionConfirmation(){
+    if(this.props.onEditIssueDescription && this.state.descriptionInput !== ""){
+      this.props.onEditIssueDescription(this.state.descriptionInput);
+    }
+  }
+
+  handleAssignUserConfirmation(){
+    if(this.props.onAssignUser && this.state.selectedUserValue !== ""){
+      this.props.onAssignUser(this.state.selectedUserValue);
+    }
+  }
 
 
   render () {
@@ -99,7 +135,7 @@ handleOnEditClick() {
       onCloseRequest,
       cardTitle,
       cardID,
-      cardDescription
+      cardDescription,
     } = this.props;
     
     return (
@@ -112,18 +148,30 @@ handleOnEditClick() {
               <textarea 
               className="modal-edit-title" 
               // placeholder={cardTitle} 
-              // value={this.state.titleInput} 
-              onChange={this.handleTitleChange}>{cardTitle}</textarea>
+              defaultValue= {cardTitle} 
+              onChange={this.handleTitleChange}/>
             </div>
             <div>
               <textarea 
               className="modal-edit-description" 
               // placeholder={cardDescription}
               // value={this.state.descriptionInput}
-              onChange={this.handleDescriptionChange}>{cardDescription}</textarea>
+              defaultValue= {cardDescription}
+              onChange={this.handleDescriptionChange}/>
             </div>
-            <div>card id: {cardID} </div>
+            {/* <div>card id: {cardID} </div> */}
+            <div>
+            <select id="selectField" onChange={this.handleSelectChange}>
+              <option value="default">Pick a user</option>
+              <option value={this.state.psuedoUsers[0]}>{this.state.psuedoUsers[0]}</option>
+              <option value={this.state.psuedoUsers[1]}>{this.state.psuedoUsers[1]}</option>
+              <option value={this.state.psuedoUsers[2]}>{this.state.psuedoUsers[2]}</option>
+              <option value={this.state.psuedoUsers[3]}>{this.state.psuedoUsers[3]}</option>
+              <option value={this.state.psuedoUsers[4]}>{this.state.psuedoUsers[4]}</option>
+            </select>
+            </div>
             <button type="button" className="submitBtn" onClick={this.handleOnEditClick}>Submit</button>
+            {/* <p>{this.state.selectedUserValue}</p> */}
           </div>
         </div>
 
