@@ -16,8 +16,7 @@ exports.account_create_post = function(req,res,next){
             first_name: req.body.first_name,
             last_name: req.body.last_name,
             email: req.body.email,
-            username: req.body.username,
-            password: req.body.password,
+            password: req.body.password
         }
     );
 
@@ -28,16 +27,34 @@ exports.account_create_post = function(req,res,next){
                  if (found_email) {
                      // Email exists, redirect to its detail page.
                      console.log("This email already exists in the db");
+                     res.json({message: "An account with this email already exists"});
                  }
                  else {
 
                      account.save(function (err) {
                        if (err) { return next(err); }
-                       // Account saved. Redirect to account detail page.
+                       
+                       // Account saved. Set session data.
+
                        req.session.accountId = account._id;
+                       req.session.email = account.email;
+                       req.session.first_name = account.first_name;
+                       req.session.last_name = account.last_name; 
+
+                       var user = {
+                        account_id: req.session.accountId,
+                        email: req.session.email,
+                        first_name: req.session.first_name,
+                        last_name: req.session.last_name
+                       };
+
+                       //test with console.log
                        console.log(req.session.accountId);
-                       res.json({ message: 'account saved' }); 
-                       //res.redirect('/loggedin');
+                       console.log(req.session.email);
+
+                        //response to client
+                       res.send(user); 
+                     
                        
                      });
 
@@ -49,23 +66,38 @@ exports.account_create_post = function(req,res,next){
 
 //handle Account login on POST
 exports.account_login_post = function(req,res,next){
-    console.log(req.body.login_email);
-    console.log(req.body.login_password);
+    //console.log(req.body.login_email);
+    //console.log(req.body.login_password);
 
 if(req.body.login_email && req.body.login_password){
     Account.authenticate(req.body.login_email, req.body.login_password, function (error, account) {	
         if (!account) {	   
-        console.log(error);
+        console.log("error: account not found");
         var err = new Error('Wrong email or password.');	        
         err.status = 401;	         
         return next(err);	         
         }  
         else {
-                 req.session.accountId = account._id;
-                 console.log(req.session.accountId);	
-                 res.json({ message: 'login successful' });       
-                 //return res.redirect('/loggedin');
-                 //need to send something else here?	        
+                //set session data
+                req.session.accountId = account._id;
+                req.session.email = account.email;
+                req.session.first_name = account.first_name;
+                req.session.last_name = account.last_name; 
+
+                var user = {
+                    account_id: req.session.accountId,
+                    email: req.session.email,
+                    first_name: req.session.first_name,
+                    last_name: req.session.last_name
+                   };
+
+                 //test with console.log
+                 console.log(req.session.accountId);
+                 console.log(req.session.email);
+                 console.log("you're logged in!");	
+
+                 //response to client
+                 res.send(user);               
             }	       
             });	    
          } else {	   
@@ -79,15 +111,28 @@ if(req.body.login_email && req.body.login_password){
 };
              
 
+//send Accounts on GET
+exports.get_accounts = function(req,res){
+      //looks at our Account Schema
+      Account.find(function(err, accounts) {
+        if (err)
+          res.send(err);
+        //responds with a json object of our database accounts.
+        res.json(accounts);
+        console.log(accounts);
+      });
+
+};
+
+
+
 //handle Account sign out on GET
 exports.logout_get = function(req,res,next){
-    //console.log(req.session);
     if(req.session){
         req.session.destroy(function(err){
             if (err){
                 return next(err);
             }else{
-                //return res.render('index');
                 res.json({ message: 'Session destroyed' });
                 console.log('session destroyed');
                 //return something else here?

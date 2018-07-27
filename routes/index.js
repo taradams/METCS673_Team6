@@ -10,20 +10,19 @@ var messageCtrl = require('../controllers/messageCtrl');
 
 
 
-/* ~~~~~~~~~~~~~~~~~~~~ACCOUNT ROUTES~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */ //to be implemented later
+/* ~~~~~~~~~~~~~~~~~~~~ACCOUNT ROUTES~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+   
+//POST request for creating an Account
+router.post('/createaccount',  accountCtrl.account_create_post);
 
-/*
 //POST request for account authentication
 router.post('/login',  accountCtrl.account_login_post);
 
 //GET request for logout
 router.get('/logout', accountCtrl.logout_get);
 
-//POST request for creating an Account
-router.post('/createaccount',  accountCtrl.account_create_post);
-
 //GET request to display account information
-//router.get('/account', account_controller.account_detail); */
+router.get('/accounts', accountCtrl.get_accounts); 
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~COLUMN ROUTES~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */ 
 
