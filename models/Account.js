@@ -38,7 +38,7 @@ AccountSchema.statics.authenticate = function (email, password, callback) {
     }
     });
 };
-
+ 
 
 AccountSchema.pre('save', function (next) {
   var account = this;
