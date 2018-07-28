@@ -18,6 +18,9 @@ router.post('/createaccount',  accountCtrl.account_create_post);
 //POST request for account authentication
 router.post('/login',  accountCtrl.account_login_post);
 
+//GET request to see if a session is running
+router.get('/user', accountCtrl.get_user);
+
 //GET request for logout
 router.get('/logout', accountCtrl.logout_get);
 

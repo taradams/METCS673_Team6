@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import store from './store';
 import registerServiceWorker from './registerServiceWorker';
+import axios from 'axios';
 
 ReactDOM.render(
   <Provider store={store}>

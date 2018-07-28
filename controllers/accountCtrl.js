@@ -109,7 +109,25 @@ if(req.body.login_email && req.body.login_password){
            }
 
 };
-             
+
+//handle checking for user on GET
+exports.get_user = function(req,res,next){
+    if(req.session.accountId){
+        var user = {
+            account_id: req.session.accountId,
+            email: req.session.email,
+            first_name: req.session.first_name,
+            last_name: req.session.last_name
+           };
+        res.send(user);
+            }else{
+                res.json({ message: 'no user session' });
+                console.log('no session');
+                //return something else here?
+            }
+        };
+
+
 
 //send Accounts on GET
 exports.get_accounts = function(req,res){
