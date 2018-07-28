@@ -41,18 +41,18 @@ class IssueForm extends Component{
                 <div>
                     <textarea 
                     className="issue-title" 
-                    placeholder="New Issue Title" 
+                    placeholder="Issue Title" 
                     value={this.state.titleInput} 
                     onChange={this.handleTitleChange}/>
                 </div>
                 <div>
                     <textarea 
                     className="issue-description" 
-                    placeholder="Write a new description..." 
+                    placeholder="Write a description..." 
                     value={this.state.descriptionInput} 
                     onChange={this.handleDescriptionChange}/>
                 </div>
-                <button className="submitNewIssueBtn" type="button" onClick={this.createNewIssueBtn}>Create New Issue</button>
+                <button type="button" onClick={this.createNewIssueBtn}>Create New Issue</button>
             </form>
         );
     }

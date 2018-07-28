@@ -71,14 +71,14 @@ class Column extends React.Component {
         if (this.state.id != "")
             getTaskByColumnID(this.state.id, function(json) {
                 const cards = json.map((task) => {
-                    return { id: task._id, content: task.overview, status: task.status, details: task.details, user: task.assignee };
+                    return { id: task._id, content: task.overview, status: task.status, details: task.details };
                 });
                 this.setState({ addingCard: false, value: "", cards: cards });
             }.bind(this));
         else
             getTaskWithoutColumnID(function(json) {
                     const cards = json.map((task) => {
-                        return { id: task._id, content: task.overview, status: task.status, details: task.details, user: task.assignee };
+                        return { id: task._id, content: task.overview, status: task.status, details: task.details };
                     });
                     this.setState({ addingCard: false, value: "", cards: cards });
                 }.bind(this));
