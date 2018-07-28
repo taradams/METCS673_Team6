@@ -1,13 +1,36 @@
-ul {
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  margin-top:0;
-  margin-bottom:10px;
-  display:flex;
+.nav_bar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: lightgrey;
+    height: 36pt;
+    text-align: right;
 }
 
 li {
-  flex:0 0 100px;
-  box-sizing: order-box;
-  list-style-type:none;
+    display: inline;
+    margin: 0;
+}
+
+a.nav_button:link, a.nav_button:visited {
+    color: black;
+    background-color: grey;
+    text-decoration: none;
+    font-size: 18pt;
+    padding: 13pt;
+    margin: 0;
+}
+
+a.nav_button:hover, a.nav_button:active {
+    color: darkslategrey;
+    background-color: lightblue;
+    text-decoration: none;
+    font-size: 18pt;
+    padding: 13pt;
+    margin: 0;
+}
+
+.sign_out_button {
+    background-color: grey;
+    padding: 14pt;
 }
