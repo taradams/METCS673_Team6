@@ -20,10 +20,10 @@ export default class Tab extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="TabDiv">
                 <input type="submit" value="Chat" onClick={this.onClick} />
                 <div className="room">
-                    {this.state.show ? <Room /> : null}
+                    {/*{this.state.show ?*/} <Room /> {/*: null}*/}
                 </div>
             </div>
         )

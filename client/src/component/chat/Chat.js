@@ -4,8 +4,8 @@ import Tab from './Tab';
 class ChatPage extends Component{
     render() {
         return (
-            <div>
-                <div>
+            <div className="ChatDiv1">
+                <div className="ChatDiv2">
                     <Tab />
                 </div>
             </div>
