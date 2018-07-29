@@ -2,7 +2,9 @@ import React from 'react';
 import Columns from './Columns';
 import Column from '../component/Column';
 import './ProjectManager.css'
+import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
+
 class ProjectManagerPage extends React.Component {
   constructor(props) {
     super(props);
@@ -87,7 +89,7 @@ class ProjectManagerPage extends React.Component {
     console.log(this.props.userName)
     return (
     <div>
-      <h1 className='pageTitle'>{this.props.userName.first_name}'s Project Management Page</h1> 
+      <h1 className='pageTitle'>{this.props.session.first_name}'s Project Management Page</h1> 
           <div className="row"> 
             <Columns columns={this.state.columns} handleDeleteColumn={this.handleDeleteColumn} handleAddList={this.handleAddList}/> 
           </div>
@@ -108,8 +110,13 @@ class ProjectManagerPage extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    userName: state.sessionState,
+    session: state.sessionState,
   }
 }
 
-export default connect(mapStateToProps,null)(ProjectManagerPage);
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+  },dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectManagerPage);

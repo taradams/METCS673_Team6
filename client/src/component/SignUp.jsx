@@ -138,7 +138,6 @@ class SignUpForm extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    userName: state.sessionState
   }
 }
 

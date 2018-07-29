@@ -3,6 +3,12 @@ import { PasswordForgetLink } from './PasswordForget';
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
 import { INITIAL_STATE } from '../reducers/SignIn';
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import getUser from '../actions/actions';
+import { withRouter } from 'react-router-dom';
+import axios from 'axios';
+
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
@@ -12,29 +18,33 @@ const byPropKey = (propertyName, value) => () => ({
 class SignInForm extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = { ...INITIAL_STATE };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {email:'',password:''};
   }
 
-  onSubmit = (event) => {
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  handleSubmit(event) {
     const {
       email,
       password,
     } = this.state;
-
-    const {
-      history,
-    } = this.props;
-
-    auth.doSignInWithEmailAndPassword(email, password)
-      .then(() => {
+    axios.post('/api/login', {email, password})
+      .then(res => {
+        console.log(res)
+        console.log(res.data)
         this.setState(() => ({ ...INITIAL_STATE }));
-        history.push(routes.HOME);
+        this.props.getUser(res.data);
+        this.props.history.push(routes.PROJECT_MANAGER);
       })
       .catch(error => {
         this.setState(byPropKey('error', error));
       });
-
     event.preventDefault();
   }
 
@@ -52,15 +62,17 @@ class SignInForm extends React.Component {
     return (
       <form onSubmit={this.onSubmit}>
         <input
-          value={email}
-          onChange={event => this.setState(byPropKey('email', event.target.value))}
+          value={this.state.email}
+          onChange={this.handleChange}
           type="text"
+          name="email"
           placeholder="Email Address"
         />
         <input
-          value={password}
-          onChange={event => this.setState(byPropKey('password', event.target.value))}
+          value={this.state.password}
+          onChange={this.handleChange}
           type="password"
+          name="password"
           placeholder="Password"
         />
         <button disabled={isInvalid} type="submit">
@@ -73,5 +85,15 @@ class SignInForm extends React.Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+  }
+}
+//connects redux actions to props
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    getUser: getUser,
+  }, dispatch);
+}
 
-export default SignInForm;
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(SignInForm));
