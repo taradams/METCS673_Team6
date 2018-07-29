@@ -5,6 +5,9 @@ import * as routes from '../constants/routes';
 import { INITIAL_STATE } from '../reducers/SignUp';
 import App from '../App.js'
 import {withRouter} from 'react-router-dom';
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import getUser from '../actions/actions';
 
 class SignUpForm extends React.Component {
 
@@ -43,6 +46,7 @@ class SignUpForm extends React.Component {
     .then(
       res => { 
         this.setState(() => ({...INITIAL_STATE }));
+        this.props.getUser();
         this.props.history.push(routes.PROJECT_MANAGER);
       }
     )
@@ -132,4 +136,17 @@ class SignUpForm extends React.Component {
 
 }
 
-export default withRouter(SignUpForm);
+function mapStateToProps(state) {
+  return {
+  }
+}
+
+//connects redux actions to props
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    getUser: getUser,
+  }, dispatch);
+}
+
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(SignUpForm));
