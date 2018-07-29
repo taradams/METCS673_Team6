@@ -1,10 +1,14 @@
-import { GET_USER } from './types';
-import axios from 'axios';
+import { GET_USER, DROP_USER } from './types';
 
-
-export default function getUser(user) {  
+export function getUser(user) {  
     return dispatch => {
         dispatch(getUserAsync(user));
+    }
+}
+
+export function dropUser() {
+    return dispatch => {
+        dispatch(dropUserAsync());
     }
 }
 
@@ -13,5 +17,11 @@ function getUserAsync(user){
   return {
     type: GET_USER,
     payload: user
+  };
+}
+function dropUserAsync(){
+  return {
+    type: DROP_USER,
+    payload: null
   };
 }

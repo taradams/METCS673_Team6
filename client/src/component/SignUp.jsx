@@ -7,7 +7,7 @@ import App from '../App.js'
 import {withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import getUser from '../actions/actions';
+import { getUser } from '../actions/actions';
 
 class SignUpForm extends React.Component {
 

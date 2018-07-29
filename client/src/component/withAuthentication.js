@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import getUser from '../actions/actions';
+import { getUser } from '../actions/actions';
 import axios from 'axios';
 
 const withAuthentication = (Component) => {

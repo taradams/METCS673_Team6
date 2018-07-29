@@ -5,7 +5,7 @@ import * as routes from '../constants/routes';
 import { INITIAL_STATE } from '../reducers/SignIn';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import getUser from '../actions/actions';
+import { getUser } from '../actions/actions';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
