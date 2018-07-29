@@ -13,16 +13,17 @@ class Navigation extends React.Component {
     super(props);
 
     this.state = {
-      authUser: props.authUser
+      session: props.session
     };
   }
 
   componentWillReceiveProps(nextProps) {
         this.setState({
-            authUser: nextProps.authUser
+            session: nextProps.session
         });
   }
   render() {
+    console.log(this.state.session)
     const NavigationAuth = () => (
       <ul>
         <li><Link to={routes.PROJECT_MANAGER}>Project Manager</Link></li>
@@ -38,7 +39,7 @@ class Navigation extends React.Component {
 
     return (
     <div>
-      { this.state.authUser
+      { this.state.session
           ? <NavigationAuth />
           : <NavigationNonAuth />
       }
@@ -47,7 +48,7 @@ class Navigation extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  authUser: state.sessionState.authUser,
+  session: state.sessionState,
 });
 
 export default connect(mapStateToProps)(Navigation);
