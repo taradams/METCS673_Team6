@@ -2,15 +2,14 @@ import { GET_USER } from './types';
 import axios from 'axios';
 
 
-export default function getUser() {  
-  const res = axios.get('/api/user/')
-  console.log(res)
-      return dispatch => {
-        dispatch(getUserAsync(res.data));
-  }
+export default function getUser(user) {  
+    return dispatch => {
+        dispatch(getUserAsync(user));
+    }
 }
 
 function getUserAsync(user){  
+  console.log(user)
   return {
     type: GET_USER,
     payload: user

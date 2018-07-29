@@ -46,7 +46,7 @@ class SignUpForm extends React.Component {
     .then(
       res => { 
         this.setState(() => ({...INITIAL_STATE }));
-        this.props.getUser();
+        this.props.getUser(res.data);
         this.props.history.push(routes.PROJECT_MANAGER);
       }
     )
@@ -138,6 +138,7 @@ class SignUpForm extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    userName: state.sessionState
   }
 }
 
