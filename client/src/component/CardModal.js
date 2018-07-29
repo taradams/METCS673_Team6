@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import isNil from 'lodash/fp/isNil';
 import './CardModal.css';
+import {EditIssue} from '../api/CardModal'
+import { onUpdate } from '../api/socket';
+
 
 class CardModal extends Component {
   constructor(props) {
@@ -19,7 +22,7 @@ class CardModal extends Component {
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-    this.handleOnEditClick = this.handleOnEditClick.bind(this);
+    this.handleOnEditClick2 = this.handleOnEditClick2.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
@@ -73,28 +76,39 @@ handleDescriptionChange(e){
   // console.log(this.state.value);
 }
 
-handleOnEditClick() {
-      const editTask = {overview: this.state.titleInput, details: this.state.descriptionInput, assignee: this.state.selectedUserValue};
-      fetch("/api/tasks/" + this.props.cardID, {
-      method: 'PUT',
-      mode: 'cors',
-      body: JSON.stringify(editTask),
-      headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          'Access-Control-Allow-Origin': '*'
-      }
-  })
-      .then(function(response) {
-          return response.json();
-      })
-      .then(function(json) {
-        this.setState({titleInput: this.state.titleInput, descriptionInput: this.state.descriptionInput, selectedValue: this.state.selectedUserValue});                
-        this.handleEditTitleConfirmation();
-        this.handleEditDescriptionConfirmation();
-        this.handleAssignUserConfirmation();             
-      }.bind(this));
+// handleOnEditClick() {
+//       const editTask = {overview: this.state.titleInput, details: this.state.descriptionInput, assignee: this.state.selectedUserValue};
+//       fetch("/api/tasks/" + this.props.cardID, {
+//       method: 'PUT',
+//       mode: 'cors',
+//       body: JSON.stringify(editTask),
+//       headers: {
+//           "Content-Type": "application/json; charset=utf-8",
+//           'Access-Control-Allow-Origin': '*'
+//       }
+//   })
+//       .then(function(response) {
+//           return response.json();
+//       })
+//       .then(function(json) {
+//         this.setState({titleInput: this.state.titleInput, descriptionInput: this.state.descriptionInput, selectedValue: this.state.selectedUserValue});                
+//         this.handleEditTitleConfirmation();
+//         this.handleEditDescriptionConfirmation();
+//         this.handleAssignUserConfirmation();             
+//       }.bind(this));
 
-      // alert("Submitted!");
+//       // alert("Submitted!");
+//   }
+
+  handleOnEditClick2(){
+    const editTask = {overview: this.state.titleInput, details: this.state.descriptionInput, assignee: this.state.selectedUserValue};
+    EditIssue(editTask, this.props.cardID, function(json){
+      onUpdate();
+      this.setState({titleInput: this.state.titleInput, descriptionInput: this.state.descriptionInput, selectedValue: this.state.selectedUserValue});                
+      this.handleEditTitleConfirmation();
+      this.handleEditDescriptionConfirmation();
+      this.handleAssignUserConfirmation();
+    }.bind(this));
   }
 
   handleSelectChange(e){
@@ -165,7 +179,7 @@ handleOnEditClick() {
               <option value={this.state.psuedoUsers[4]}>{this.state.psuedoUsers[4]}</option>
             </select>
             </div>
-            <button type="button" className="submitBtn" onClick={this.handleOnEditClick}>Submit</button>
+            <button type="button" className="submitBtn" onClick={this.handleOnEditClick2}>Submit</button>
             {/* <button type="button" onClick={this.submitChangesButton}>Test BTN</button> */}
           </div>
         </div>
