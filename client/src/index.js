@@ -11,9 +11,8 @@ import thunk from 'redux-thunk';
 
 
 const INITIAL_STATE = {
-  sessionState: {authUser:null},
-  userState: null
-}
+  sessionState: null,
+ }
 
 const store = configureStore(INITIAL_STATE);
 
