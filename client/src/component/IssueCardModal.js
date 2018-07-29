@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import isNil from 'lodash/fp/isNil';
 import './IssueCardModal.css';
+import { EditIssue } from '../api/IssueCardModal';
+import { onUpdate } from '../api/socket';
 
 class IssueCardModal extends Component {
   constructor(props) {
@@ -19,7 +21,7 @@ class IssueCardModal extends Component {
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-    this.handleOnEditClick = this.handleOnEditClick.bind(this);
+    this.handleOnEditClick2 = this.handleOnEditClick2.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
@@ -73,36 +75,47 @@ handleDescriptionChange(e){
   // console.log(this.state.value);
 }
 
-handleOnEditClick() {
-      const editTask = {overview: this.state.titleInput, details: this.state.descriptionInput, assignee: this.state.selectedUserValue};
-      fetch("/api/tasks/" + this.props.cardID, {
-      method: 'PUT',
-      mode: 'cors',
-      body: JSON.stringify(editTask),
-      headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          'Access-Control-Allow-Origin': '*'
-      }
-  })
-      .then(function(response) {
-          return response.json();
-      })
-      .then(function(json) {
-          this.setState({titleInput: this.state.titleInput, descriptionInput: this.state.descriptionInput, selectedValue: this.state.selectedUserValue});                
-          // this.hanldeEditConfirmation();
-          this.handleEditTitleConfirmation();
-          this.handleEditDescriptionConfirmation();
-          this.handleAssignUserConfirmation();
-      }.bind(this));
+// handleOnEditClick() {
+//       const editTask = {overview: this.state.titleInput, details: this.state.descriptionInput, assignee: this.state.selectedUserValue};
+//       fetch("/api/tasks/" + this.props.cardID, {
+//       method: 'PUT',
+//       mode: 'cors',
+//       body: JSON.stringify(editTask),
+//       headers: {
+//           "Content-Type": "application/json; charset=utf-8",
+//           'Access-Control-Allow-Origin': '*'
+//       }
+//   })
+//       .then(function(response) {
+//           return response.json();
+//       })
+//       .then(function(json) {
+//           this.setState({titleInput: this.state.titleInput, descriptionInput: this.state.descriptionInput, selectedValue: this.state.selectedUserValue});                
+//           // this.hanldeEditConfirmation();
+//           this.handleEditTitleConfirmation();
+//           this.handleEditDescriptionConfirmation();
+//           this.handleAssignUserConfirmation();
+//       }.bind(this));
 
-      // alert("Submitted!");
-  }
+//       // alert("Submitted!");
+//   }
 
   handleSelectChange(e){
     this.setState({
       selectedUserValue: e.target.value
     });
     // console.log(this.state.selectedValue);
+  }
+
+  handleOnEditClick2(){
+    const editTask = {overview: this.state.titleInput, details: this.state.descriptionInput, assignee: this.state.selectedUserValue};
+    EditIssue(editTask, this.props.cardID, function(json){
+      onUpdate();
+      this.setState({titleInput: this.state.titleInput, descriptionInput: this.state.descriptionInput, selectedValue: this.state.selectedUserValue});                
+      this.handleEditTitleConfirmation();
+      this.handleEditDescriptionConfirmation();
+      this.handleAssignUserConfirmation();
+    }.bind(this));
   }
 
   hanldeEditConfirmation(){
@@ -170,7 +183,7 @@ handleOnEditClick() {
               <option value={this.state.psuedoUsers[4]}>{this.state.psuedoUsers[4]}</option>
             </select>
             </div>
-            <button type="button" className="submitBtn" onClick={this.handleOnEditClick}>Submit</button>
+            <button type="button" className="submitBtn" onClick={this.handleOnEditClick2}>Submit</button>
             {/* <p>{this.state.selectedUserValue}</p> */}
           </div>
         </div>
