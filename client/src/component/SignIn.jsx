@@ -16,11 +16,12 @@ const byPropKey = (propertyName, value) => () => ({
 
 
 class SignInForm extends React.Component {
+
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {email:'',password:''};
+    this.state = {INITIAL_STATE};
   }
 
   handleChange(event) {
@@ -75,7 +76,7 @@ class SignInForm extends React.Component {
           name="password"
           placeholder="Password"
         />
-        <button disabled={isInvalid} type="submit">
+        <button disabled={isInvalid} onClick = {this.handleSubmit} type="submit">
           Sign In
         </button>
 
