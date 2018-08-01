@@ -2,7 +2,7 @@ import React from 'react';
 import Columns from './Columns';
 import Column from '../component/Column';
 import './ProjectManager.css'
-import withDragDropContext from './withDragDropContext';
+import withDragDropContext from '../lib/withDragDropContext';
 
 class ProjectManagerPage extends React.Component {
   constructor(props) {

@@ -54,8 +54,7 @@ const cardTarget = {
 		if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
 			return
         }
-        console.log(item);
-        console.log(props);
+
         if (item.card.status === props.card.status) {
             props.moveCard(dragIndex, hoverIndex);
             monitor.getItem().index = hoverIndex;
