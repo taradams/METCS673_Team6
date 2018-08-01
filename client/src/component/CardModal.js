@@ -182,7 +182,7 @@ handleDescriptionChange(e){
               <option value="default">Pick a user</option>
               {this.state.psuedoUsers2.map((user) => {
                 return(
-                  <option value={user}>{user.first_name}</option>
+                  <option value={user.first_name}>{user.first_name}</option>
                 )
               })}
               {/* <option value={this.state.psuedoUsers[0]}>{this.state.psuedoUsers[0]}</option>
