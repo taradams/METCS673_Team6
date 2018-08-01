@@ -29,9 +29,8 @@ class Page extends React.Component {
             <Route exact path={routes.SIGN_IN} component={() => <SignInPage />} />
             <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
             <Route exact path={routes.PROJECT_MANAGER} component={() =>
-              <DragDropContextProvider backend={HTML5Backend}>
                 <ProjectManagerPage />
-              </DragDropContextProvider>} />
+              } />
             <Route exact path={routes.ISSUE_TRACKER} component={() => <IssueTrackerPage />} />
             <Route exact path={routes.CHAT} component={() => <ChatPage />} />
         </div>
