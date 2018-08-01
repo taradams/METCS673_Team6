@@ -1,19 +1,17 @@
+import {GET_USER, DROP_USER} from '../actions/types';
+
 const INITIAL_STATE = {
-  authUser: null,
 };
 
-const applySetAuthUser = (state, action) => ({
-  ...state,
-  authUser: action.authUser
-});
-
-function sessionReducer(state = INITIAL_STATE, action) {
-  switch(action.type) {
-    case 'AUTH_USER_SET' : {
-      return applySetAuthUser(state, action);
-    }
-    default : return state;
+export default function(state=INITIAL_STATE, action) {
+  switch (action.type) {
+    case GET_USER:
+      console.log(action)
+      return action.payload;
+    case DROP_USER:
+      console.log(action)
+      return action.payload;
+    default: return state
   }
 }
 
-export default sessionReducer;

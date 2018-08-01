@@ -16,6 +16,9 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContextProvider } from 'react-dnd';
 
 class Page extends React.Component {
+  constructor(props){
+    super(props);
+  }
 
   render() {
     return (

@@ -66,11 +66,11 @@ exports.account_create_post = function(req,res,next){
 
 //handle Account login on POST
 exports.account_login_post = function(req,res,next){
-    //console.log(req.body.login_email);
-    //console.log(req.body.login_password);
+    //console.log(req.body.email);
+    //console.log(req.body.password);
 
-if(req.body.login_email && req.body.login_password){
-    Account.authenticate(req.body.login_email, req.body.login_password, function (error, account) {	
+if(req.body.email && req.body.password){
+    Account.authenticate(req.body.email, req.body.password, function (error, account) {	
         if (!account) {	   
         console.log("error: account not found");
         var err = new Error('Wrong email or password.');	        
@@ -101,7 +101,7 @@ if(req.body.login_email && req.body.login_password){
             }	       
             });	    
          } else {	   
-            console.log(req.body.login_email);
+            console.log(req.body.email);
            var err = new Error('Email and password are required.');	
            err.status = 401;
              return next(err);	 
@@ -109,7 +109,26 @@ if(req.body.login_email && req.body.login_password){
            }
 
 };
-             
+
+//handle checking for user on GET
+exports.get_user = function(req,res,next){
+    if(req.session.accountId){
+        var user = {
+            account_id: req.session.accountId,
+            email: req.session.email,
+            first_name: req.session.first_name,
+            last_name: req.session.last_name
+           };
+        res.send(user);
+            }else{
+                res.json({ message: 'no user session' });
+                console.log('no session');
+                err.status = 401;
+                return next(err);
+            }
+        };
+
+
 
 //send Accounts on GET
 exports.get_accounts = function(req,res){
