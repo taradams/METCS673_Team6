@@ -21,8 +21,26 @@ import './Page.css';
 class Page extends React.Component {
 
     constructor(props) {
-        super(props);
-        this.state = { show: true }
+        super(props); 
+        this.state = {
+            show_chat: false,
+            show_on_left: true /*true is pmt, false is issue tracker*/
+        }
+        this.chat_handler = this.chat_handler.bind(this);
+        this.pmt_handler = this.pmt_handler.bind(this);
+        this.issue_tracker_handler = this.issue_tracker_handler.bind(this);
+    }
+
+    chat_handler(data) {
+        this.setState({ show_chat: data });
+    }
+
+    pmt_handler(data) {
+        this.setState({ show_on_left: data });
+    }
+
+    issue_tracker_handler(data) {
+        this.setState({ show_on_left: data });
     }
 
     render() {
@@ -30,38 +48,44 @@ class Page extends React.Component {
             <div>
                 <Router>
                     <div>
-                        <Navigation />
+                        <Navigation chat_handler={this.chat_handler} pmt_handler={this.pmt_handler} issue_tracker_handler={this.issue_tracker_handler} />
                         <div className="canvas">
-                            <DragDropContextProvider backend={HTML5Backend}>
-                            <Route exact path={routes.LANDING} component={() => <LandingPage />} />
-                            <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />} />
-                            <Route exact path={routes.SIGN_IN} component={() => <SignInPage />} />
-                            <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
-                            <Route exact path={routes.PROJECT_MANAGER} component=
-                                {() =>
-                                    <div className="pmt_lonely">
-                                        {/*<DragDropContextProvider backend={HTML5Backend}>*/}
-                                            <ProjectManagerPage />
-                                        {/*</DragDropContextProvider>*/}
-                                    </div>
-                                }
-                            />
-                            <Route exact path={routes.ISSUE_TRACKER} component={() => <IssueTrackerPage />} />
-                            <Route exact path={routes.CHAT} component=
-                                {() =>
-                                    <div className="flex_box">
-                                        <div className="pmt_component">
-                                            {/*<DragDropContextProvider backend={HTML5Backend}>*/}
-                                                <ProjectManagerPage style="margin: 0; padding: 0;"/>
-                                            {/*</DragDropContextProvider>*/}
-                                        </div>
-                                        <div className="chat_component" >
-                                            <Room />
-                                        </div>
-                                    </div>
-                                }
-                                />
-                            </DragDropContextProvider>
+                            {/*<DragDropContextProvider backend={HTML5Backend}>*/}
+                                <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />} />
+                                <Route exact path={routes.SIGN_IN} component={() => <SignInPage />} />
+                                <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
+                                <div>
+                                    {this.state.show_on_left ?
+                                        (this.state.show_chat ?
+                                            <div className="flex_box">
+                                                <div className="pmt_component">
+                                                    <ProjectManagerPage />
+                                                </div>
+                                                <div className="chat_component" >
+                                                    <Room />
+                                                </div>
+                                            </div>
+                                            :
+                                            <div className="pmt_lonely">
+                                                <ProjectManagerPage />
+                                            </div>
+                                        ) : (this.state.show_chat ?
+                                            <div className="flex_box">
+                                                <div className="pmt_component">
+                                                    <IssueTrackerPage />
+                                                </div>
+                                                <div className="chat_component" >
+                                                    <Room />
+                                                </div>
+                                            </div>
+                                            :
+                                            <div className="pmt_lonely">
+                                                <IssueTrackerPage />
+                                            </div>
+                                        )
+                                    }
+                                </div>
+                            {/*</DragDropContextProvider>*/}
                         </div>
                     </div>
                 </Router>

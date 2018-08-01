@@ -12,25 +12,33 @@ li {
     margin: 0;
 }
 
-a.nav_button:link, a.nav_button:visited {
+.nav_button {
     color: black;
     background-color: grey;
     text-decoration: none;
     font-size: 18pt;
-    padding: 13pt;
+    padding-right: 12pt;
+    padding-top: 5pt;
+    padding-bottom: 5pt;
     margin: 0;
+    border: none;
 }
 
-a.nav_button:hover, a.nav_button:active {
-    color: darkslategrey;
-    background-color: lightblue;
-    text-decoration: none;
-    font-size: 18pt;
-    padding: 13pt;
-    margin: 0;
-}
+    .nav_button:hover, .nav_button:active {
+        color: darkslategrey;
+        background-color: lightblue;
+        text-decoration: none;
+        font-size: 18pt;
+        padding-right: 12pt;
+        padding-top: 5pt;
+        padding-bottom: 5pt;
+        margin: 0;
+    }
 
 .sign_out_button {
     background-color: grey;
-    padding: 14pt;
+    padding-top: 14pt;
+    padding-bottom: 9pt;
+    padding-right: 6pt;
+    margin: 0;
 }

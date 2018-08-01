@@ -14,10 +14,12 @@ class Navigation extends React.Component {
 
         this.state = {
             authUser: props.authUser,
-            bool_toggle: false,
-            my_route: routes.CHAT
+            show_chat: false,
+            show_on_left: true /*true is pmt, false is issue tracker*/
         };
-        this.toggle_chat.bind(this);
+        this.chat_click = this.chat_click.bind(this);
+        this.pmt_click = this.pmt_click.bind(this);
+        this.issue_tracker_click = this.issue_tracker_click.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -26,20 +28,31 @@ class Navigation extends React.Component {
         });
     }
 
-    toggle_chat(toggle) {
-        if (toggle) {
-            this.setState({ my_route: routes.CHAT, bool_toggle: !this.state.bool_toggle });
-        } else if (!toggle) {
-            this.setState({ my_route: routes.PROJECT_MANAGER, bool_toggle: !this.state.bool_toggle });
+    chat_click(e) {
+        if (this.state.show_chat) {
+            this.setState({ show_chat: false });
+        } else {
+            this.setState({ show_chat: true });
         }
+        this.props.chat_handler(this.state.show_chat);
+    }
+
+    pmt_click(e) {
+        this.setState({ show_on_left: true });
+        this.props.pmt_handler(this.state.show_on_left);
+    }
+
+    issue_tracker_click(e) {
+        this.setState({ show_on_left: false });
+        this.props.issue_tracker_handler(this.state.show_on_left);
     }
 
     render() { 
         const NavigationAuth = () => (
             <ul className="nav_bar">
-                <li><Link className="nav_button" to={routes.PROJECT_MANAGER}>Project Manager</Link></li>
-                <li><Link className="nav_button" to={routes.ISSUE_TRACKER}>Issue Tracker</Link></li>
-                <li><Link className="nav_button" to={this.state.my_route} onClick={() => { this.toggle_chat(this.state.bool_toggle) }}>Chat</Link></li>
+                <li><input type="submit" value="Project Manager" className="nav_button" onClick={this.pmt_click} /></li>
+                <li><input type="submit" value="Issue Tracker" className="nav_button" onClick={this.issue_tracker_click} /></li>
+                <li><input type="submit" value="Chat" className="nav_button" onClick={this.chat_click}/></li>
                 <li className="sign_out_button"><SignOutButton /></li>
             </ul>
         );
