@@ -123,6 +123,8 @@ exports.get_user = function(req,res,next){
             }else{
                 res.json({ message: 'no user session' });
                 console.log('no session');
+                var err = new Error('no session');
+                err.status = 401;
                 return next(err);
             }
         };
