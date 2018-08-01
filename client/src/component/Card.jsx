@@ -99,7 +99,7 @@ class Card extends React.Component {
                     onClick={() => this.handleToggleModal()}
                 >
                 {/* Modal */}
-                <i class="fas fa-edit"></i>
+                <i className="fas fa-edit"></i>
                 </button>
                 {showModal &&
                     <CardModal 
