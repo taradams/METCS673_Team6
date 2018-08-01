@@ -14,12 +14,13 @@
     animation: show .5s ease;
     overflow-x: hidden;
     overflow-y: auto;
+    font-size: 15px;
   }
 
   .modal-s {
-    width: 70%;
+    width: 60%;
     height: 60%;
-    /* background-color: #fff; */
+    background-color: #fff;
     box-Shadow: 0, 0, 0.625rem, rgba(0, 0, 0, 0.2);
   }
 
@@ -38,15 +39,19 @@
   }
 
   .modal-edit-title {
-    width: 400px;
-    height: 50px;
+    /* width: 400; */
+    width: 50%;
+    /* height: 50px; */
+    height: 20%;
     margin: 10px;
     resize: none;
     /* float: left; */
     }
 
   .modal-edit-description {
-    width: 500px;
+    /* width: 500px; */
+    /* height: 300px; */
+    width: 70%;
     height: 300px;
     resize: none;
     /* float: left; */
