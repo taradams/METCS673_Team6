@@ -1,9 +1,9 @@
 import React from "react";
 import "./Card.css";
-//import InlineEdit from 'react-edit-inline';//library for using inline text editing (didn't work well)
 import EditableLabel from 'react-inline-editing';//another lib for inline editing
-import { DragSource } from 'react-dnd';
+import { DragSource, DropTarget } from 'react-dnd';
 import Types from "../constants/types";
+import { findDOMNode } from 'react-dom';
 import CardModal from './CardModal'; // Import SimpleModal component
 import PropTypes from 'prop-types';
 
@@ -11,22 +11,70 @@ import PropTypes from 'prop-types';
 const cardSource = {
     beginDrag(props) {
         const item = {
-            card: props.card
+            card: props.card,
+            index: props.index,
+            localDeleteHandler: props.localDeleteHandler
         };
         return item;
-    },
+    }
     
-    endDrag(props, monitor, component) {
-        if (!monitor.didDrop()) {
+};
+
+const cardTarget = {
+
+    hover(props, monitor, component) {
+        if (!component) {
+            return null;
+        }
+        const item = monitor.getItem()
+        const dragIndex = item.index;
+        const hoverIndex = props.index;
+
+        if (dragIndex === hoverIndex) {
             return;
         }
-        const item = monitor.getItem();
-        const dropResult = monitor.getDropResult();
-        if (dropResult) {
-            props.localDeleteHandler(props.card.id);
-		}
-    }
-};
+
+        // Determine rectangle on screen
+		const hoverBoundingRect = findDOMNode(
+			component).getBoundingClientRect();
+
+		// Get vertical middle
+		const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+
+		// Determine mouse position
+		const clientOffset = monitor.getClientOffset();
+
+		// Get pixels to the top
+		const hoverClientY = (clientOffset).y - hoverBoundingRect.top
+
+		// Only perform the move when the mouse has crossed half of the items height
+		// When dragging downwards, only move when the cursor is below 50%
+		// When dragging upwards, only move when the cursor is above 50%
+		// Dragging downwards
+		if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+			return
+        }
+        console.log(item);
+        console.log(props);
+        if (item.card.status === props.card.status) {
+            props.moveCard(dragIndex, hoverIndex);
+            monitor.getItem().index = hoverIndex;
+        } else {
+            //props.moveCard(item.card, props.card.status, hoverIndex);
+            //move card to different column with index
+        }
+
+        // props.moveCard(dragIndex, hoverIndex);
+
+        // monitor.getItem().index = hoverIndex
+    }      
+}
+
+function collectDropTarget(connect, monitor) {
+    return {
+        connectDropTarget: connect.dropTarget()        
+    };
+}
 
 function collect(connect, monitor) {
     return {
@@ -111,7 +159,7 @@ class Card extends React.Component {
         const { showModal } = this.state;
         //new stuff for modal
 
-        const { isDragging, connectDragSource } = this.props;
+        const { isDragging, connectDragSource, connectDropTarget } = this.props;
         const toRender = !isDragging ? 
             (<div className="card">
             <div className="card-body">
@@ -150,10 +198,16 @@ class Card extends React.Component {
             </div>)
             :
             <div/>
-        return (connectDragSource && connectDragSource(
+        return (connectDragSource && connectDropTarget && connectDragSource(connectDropTarget(
             toRender
-        ));
+        )));
     }
 }
 
-export default DragSource(Types.CARD, cardSource, collect)(Card);
+Card.propTypes = {
+    sheet: PropTypes.object,
+    classes: PropTypes.object,
+  };
+
+const dropTarget = DropTarget(Types.CARD, cardTarget, collectDropTarget)(Card);
+export default DragSource(Types.CARD, cardSource, collect)(dropTarget);   
