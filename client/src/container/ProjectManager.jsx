@@ -4,6 +4,7 @@ import Column from '../component/Column';
 import './ProjectManager.css'
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
+import withDragDropContext from '../lib/withDragDropContext';
 
 class ProjectManagerPage extends React.Component {
   constructor(props) {
@@ -119,4 +120,4 @@ function mapDispatchToProps(dispatch){
   },dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectManagerPage);
+export default connect(mapStateToProps, mapDispatchToProps)(withDragDropContext(ProjectManagerPage));
