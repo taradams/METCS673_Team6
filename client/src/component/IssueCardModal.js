@@ -4,6 +4,7 @@ import isNil from 'lodash/fp/isNil';
 import './IssueCardModal.css';
 import { EditIssue } from '../api/IssueCardModal';
 import { onUpdate } from '../api/socket';
+import axios from 'axios';
 
 class IssueCardModal extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class IssueCardModal extends Component {
       descriptionInput: "",
       idInput: "",
       psuedoUsers: ["Alexis", "Fred", "Joey", "Rob", "Tara"],
+      psuedoUsers2: [],
       selectedUserValue: "",
     }
 
@@ -28,6 +30,12 @@ class IssueCardModal extends Component {
   componentDidMount() {
     window.addEventListener('keyup', this.handleKeyUp, false);
     document.addEventListener('click', this.handleOutsideClick, false);
+
+    axios.get("/api/accounts").then(response => {
+      this.setState({
+        psuedoUsers2: response.data,
+      });
+    });
   }
 
   componentWillUnmount() {
@@ -141,6 +149,7 @@ handleDescriptionChange(e){
       this.props.onAssignUser(this.state.selectedUserValue);
     }
   }
+ 
 
 
   render () {
@@ -176,18 +185,23 @@ handleDescriptionChange(e){
             <div>
             <select id="selectField" onChange={this.handleSelectChange}>
               <option value="default">Pick a user</option>
-              <option value={this.state.psuedoUsers[0]}>{this.state.psuedoUsers[0]}</option>
+              {this.state.psuedoUsers2.map((user) => {
+                return(
+                  <option value={user}>{user.first_name}</option>
+                )
+              })}
+              {/* <option value={this.state.psuedoUsers[0]}>{this.state.psuedoUsers[0]}</option>
               <option value={this.state.psuedoUsers[1]}>{this.state.psuedoUsers[1]}</option>
               <option value={this.state.psuedoUsers[2]}>{this.state.psuedoUsers[2]}</option>
               <option value={this.state.psuedoUsers[3]}>{this.state.psuedoUsers[3]}</option>
-              <option value={this.state.psuedoUsers[4]}>{this.state.psuedoUsers[4]}</option>
+              <option value={this.state.psuedoUsers[4]}>{this.state.psuedoUsers[4]}</option> */}
             </select>
             </div>
             <button type="button" className="submitBtn" onClick={this.handleOnEditClick2}>Submit</button>
+            {}
             {/* <p>{this.state.selectedUserValue}</p> */}
           </div>
         </div>
-
         <button
           type="button"
           className="closeButton"
