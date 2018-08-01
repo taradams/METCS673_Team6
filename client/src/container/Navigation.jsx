@@ -28,23 +28,16 @@ class Navigation extends React.Component {
         });
     }
 
-    chat_click(e) {
-        if (this.state.show_chat) {
-            this.setState({ show_chat: false });
-        } else {
-            this.setState({ show_chat: true });
-        }
-        this.props.chat_handler(this.state.show_chat);
+    chat_click() {
+        this.props.chat_handler();
     }
 
-    pmt_click(e) {
-        this.setState({ show_on_left: true });
-        this.props.pmt_handler(this.state.show_on_left);
+    pmt_click() {
+        this.props.pmt_handler();
     }
 
-    issue_tracker_click(e) {
-        this.setState({ show_on_left: false });
-        this.props.issue_tracker_handler(this.state.show_on_left);
+    issue_tracker_click() {
+        this.props.issue_tracker_handler();
     }
 
     render() { 

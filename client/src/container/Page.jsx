@@ -29,16 +29,16 @@ class Page extends React.Component {
         this.issue_tracker_handler = this.issue_tracker_handler.bind(this);
     }
 
-    chat_handler(data) {
-        this.setState({ show_chat: data });
+    chat_handler() {
+        this.setState({ show_chat: !this.state.show_chat });
     }
 
-    pmt_handler(data) {
-        this.setState({ show_on_left: data });
+    pmt_handler() {
+        this.setState({ show_on_left: true});
     }
 
-    issue_tracker_handler(data) {
-        this.setState({ show_on_left: data });
+    issue_tracker_handler() {
+        this.setState({ show_on_left: false });
     }
 
     render() {
