@@ -12,8 +12,6 @@ import * as routes from '../constants/routes';
 import withAuthentication from '../component/withAuthentication';
 import IssueTrackerPage from '../component/IssueTracker';
 import ChatPage from '../component/chat/Chat';
-import HTML5Backend from 'react-dnd-html5-backend';
-import { DragDropContextProvider } from 'react-dnd';
 import Room from '../component/chat/Room.js';
 
 import './Page.css';
@@ -50,7 +48,6 @@ class Page extends React.Component {
                     <div>
                         <Navigation chat_handler={this.chat_handler} pmt_handler={this.pmt_handler} issue_tracker_handler={this.issue_tracker_handler} />
                         <div className="canvas">
-                            {/*<DragDropContextProvider backend={HTML5Backend}>*/}
                                 <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />} />
                                 <Route exact path={routes.SIGN_IN} component={() => <SignInPage />} />
                                 <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
@@ -85,7 +82,6 @@ class Page extends React.Component {
                                         )
                                     }
                                 </div>
-                            {/*</DragDropContextProvider>*/}
                         </div>
                     </div>
                 </Router>
