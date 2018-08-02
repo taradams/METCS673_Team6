@@ -5,8 +5,10 @@ import Poster from './Poster';
 import './Room.css';
 import { sendMessage, retrieveMessages } from '../../api/chat';
 import { receiveUpdate, onUpdate } from '../../api/socket';
+import axios from 'axios';
+import { connect } from 'react-redux';
 
-export default class Room extends React.Component {
+class Room extends React.Component {
 
     constructor(props) {
         super(props);
@@ -32,12 +34,14 @@ export default class Room extends React.Component {
     }
     
     handler(data) {
-        const message = { content: data };
-        sendMessage(message, function(json) {
-            this.state.chat_log.push(json);
-            onUpdate();
-            this.setState({ chat_log: this.state.chat_log }); 
-        }.bind(this)); 
+        const content = {content:data, author:this.props.session.first_name};
+        axios.post('/api/chat',{content})
+        .then(res => {
+          console.log(res.data)
+          this.state.chat_log.push(res.data);
+          onUpdate();
+          this.setState({chat_log:this.state.chat_log});
+        }); 
     }
     
     componentDidUpdate() {
@@ -67,3 +71,11 @@ export default class Room extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+  return {
+    session: state.sessionState
+  }
+}
+
+export default connect(mapStateToProps,null)(Room);

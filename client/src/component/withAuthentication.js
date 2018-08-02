@@ -6,7 +6,6 @@ import axios from 'axios';
 const withAuthentication = (Component) => {
   class WithAuthentication extends React.Component {
     componentDidMount() {
-      console.log("this is happening")
       const {getUser} = this.props;
       axios.get('/api/user')
       .then(res => {

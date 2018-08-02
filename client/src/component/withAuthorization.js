@@ -10,14 +10,10 @@ import * as routes from '../constants/routes';
 const withAuthorization = (authCondition) => (Component) => {
   class WithAuthorization extends React.Component {
     componentDidMount() {
-      axios.get('/api/user')
-      .then(
-        res => {
-        if (!authCondition(res)) {
+        if (!authCondition(this.props.session)) {
           this.props.history.push(routes.SIGN_IN);
         }
-      });
-    }
+      };
 
     render() {
       return this.props.session ? <Component /> :null;

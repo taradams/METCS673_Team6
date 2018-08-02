@@ -1,7 +1,7 @@
 import React from 'react';
 import IssueCard from './IssueCard';
 import IssueForm from './IssueForm';
-
+import withAuthorization from './withAuthorization';
 class IssueTrackerPage extends React.Component{
     constructor(props){
         super(props);
@@ -80,5 +80,6 @@ class IssueTrackerPage extends React.Component{
     }
 }
 
+const authCondition = (user) => !!user;
 
-export default IssueTrackerPage;
+export default withAuthorization(authCondition)(IssueTrackerPage);

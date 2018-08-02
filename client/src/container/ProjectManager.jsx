@@ -4,7 +4,9 @@ import Column from '../component/Column';
 import './ProjectManager.css'
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-
+import axios from 'axios';
+import withAuthorization from '../component/withAuthorization';
+import {compose} from 'recompose';
 class ProjectManagerPage extends React.Component {
   constructor(props) {
     super(props);
@@ -86,7 +88,8 @@ class ProjectManagerPage extends React.Component {
   }
 
   render() {
-    console.log(this.props.userName)
+    console.log(this.props.session)
+    axios.get('/api/accounts').then(response=>{console.log(response.data)})
     return (
     <div>
       <h1 className='pageTitle'>{this.props.session.first_name}'s Project Management Page</h1> 
@@ -109,7 +112,8 @@ class ProjectManagerPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {
+    console.log(state.sessionState)
+    return {
     session: state.sessionState,
   }
 }
@@ -119,4 +123,6 @@ function mapDispatchToProps(dispatch){
   },dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectManagerPage);
+const authCondition = (user) => !!user;
+
+export default compose(withAuthorization(authCondition),connect(mapStateToProps, mapDispatchToProps),)(ProjectManagerPage);

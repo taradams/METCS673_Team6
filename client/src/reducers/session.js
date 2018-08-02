@@ -1,7 +1,6 @@
 import {GET_USER, DROP_USER} from '../actions/types';
 
-const INITIAL_STATE = {
-};
+const INITIAL_STATE = null;
 
 export default function(state=INITIAL_STATE, action) {
   switch (action.type) {
