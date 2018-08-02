@@ -17,6 +17,7 @@ class SignUpForm extends React.Component {
       INITIAL_STATE
     }
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.invalid = this.invalid.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -57,6 +58,13 @@ class SignUpForm extends React.Component {
     )
     event.preventDefault();
   }
+
+  invalid(password) {
+  if(!!password){
+  return !(password.length>=8);
+  }
+  return true;
+  } 
 
   render() {
     return (
@@ -127,6 +135,7 @@ class SignUpForm extends React.Component {
             <button
               className="btn btn-primary col-1 col-mr-auto"
               onClick={this.handleSubmit}
+              disabled={this.invalid(this.state.password)}
               type="submit">Sign up</button>
           </div>
         </form>
