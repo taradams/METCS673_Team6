@@ -126,4 +126,4 @@ function mapDispatchToProps(dispatch){
 
 const authCondition = (user) => !!user;
 
-export default compose(withAuthorization(authCondition),connect(mapStateToProps, mapDispatchToProps),)(ProjectManagerPage);
+export default compose(withDragDropContext,withAuthorization(authCondition),connect(mapStateToProps, mapDispatchToProps),)(ProjectManagerPage);
