@@ -2,6 +2,12 @@ import React from 'react';
 import Columns from './Columns';
 import Column from '../component/Column';
 import './ProjectManager.css'
+import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import axios from 'axios';
+import withAuthorization from '../component/withAuthorization';
+import {compose} from 'recompose';
+import withDragDropContext from '../lib/withDragDropContext';
 
 class ProjectManagerPage extends React.Component {
   constructor(props) {
@@ -84,12 +90,13 @@ class ProjectManagerPage extends React.Component {
   }
 
   render() {
+    axios.get('/api/accounts').then(response=>{console.log(response.data)})
     return (
-    <div>
-      <h1 className='pageTitle'>Project Manager Board</h1> 
-          <div className="row"> 
-            <Columns columns={this.state.columns} handleDeleteColumn={this.handleDeleteColumn} handleAddList={this.handleAddList}/> 
-          </div>
+    <div className="pmContainer">
+      <h1 className='pageTitle'>{this.props.session.first_name}'s Project Management Page</h1> 
+      <div className="row"> 
+        <Columns columns={this.state.columns} handleDeleteColumn={this.handleDeleteColumn} handleAddList={this.handleAddList}/> 
+      </div>
       <h1 className='pageTitle'>Issue Manager Board</h1>
         <div className="row">
             <div className="container" style={{width:"fit-content"}}>
@@ -100,9 +107,23 @@ class ProjectManagerPage extends React.Component {
             </div>
             </div>
         </div>
-    </div>
+      </div>
     );
   }
 }
 
-export default ProjectManagerPage;
+function mapStateToProps(state) {
+    console.log(state.sessionState)
+    return {
+    session: state.sessionState,
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+  },dispatch);
+}
+
+const authCondition = (user) => !!user;
+
+export default compose(withDragDropContext,withAuthorization(authCondition),connect(mapStateToProps, mapDispatchToProps),)(ProjectManagerPage);

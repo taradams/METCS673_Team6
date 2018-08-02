@@ -9,16 +9,22 @@ import Types from "../constants/types";
 import { receiveUpdate, onUpdate } from '../api/socket';
 import { getTaskByColumnID, getTaskWithoutColumnID, addCard, deleteCard, editCard } from '../api/cards';
 import { editColumnTitle } from '../api/columns';
+import update from 'react-addons-update';
 
 const cardTarget = {
     drop(props, monitor, component) {
-        if (monitor.didDrop()) {
+        const hasDroppedOnChild = monitor.didDrop();
+        const item = monitor.getItem();          
+        if (hasDroppedOnChild) {
             return;
         }
-        const item = monitor.getItem();
+        item.localDeleteHandler(item.card.id);            
         component.handleDrop(item.card);
-        return { text: item.text };
+        monitor.isOver
+        return { text: item.text };          
+        
     },
+
     canDrop(props, monitor) {
         const item = monitor.getItem();
         return true;
@@ -62,7 +68,9 @@ class Column extends React.Component {
         this.handleOnEditClick = this.handleOnEditClick.bind(this);
         this.onClickDeleteColumn = this.onClickDeleteColumn.bind(this);
         this.hasCard = this.hasCard.bind(this);
+        this.moveCard = this.moveCard.bind(this)
         this.retrieveTask = this.retrieveTask.bind(this);
+        this.handleEditCard = this.handleEditCard.bind(this);
         
         receiveUpdate(() => this.retrieveTask());
     }
@@ -71,14 +79,14 @@ class Column extends React.Component {
         if (this.state.id != "")
             getTaskByColumnID(this.state.id, function(json) {
                 const cards = json.map((task) => {
-                    return { id: task._id, content: task.overview, status: task.status, details: task.details };
+                    return { id: task._id, content: task.overview, status: task.status, details: task.details, user: task.assignee };
                 });
                 this.setState({ addingCard: false, value: "", cards: cards });
             }.bind(this));
         else
             getTaskWithoutColumnID(function(json) {
                     const cards = json.map((task) => {
-                        return { id: task._id, content: task.overview, status: task.status, details: task.details };
+                        return { id: task._id, content: task.overview, status: task.status, details: task.details, user: task.assignee };
                     });
                     this.setState({ addingCard: false, value: "", cards: cards });
                 }.bind(this));
@@ -131,6 +139,7 @@ class Column extends React.Component {
     handleDrop(card) {
         if (this.state.id != "") {
             const editStatus = { status: this.state.id };
+            card.status = editStatus.status;
             editCard(card.id, editStatus, function(json) {
                     this.state.cards.push(card);
                     onUpdate();
@@ -171,6 +180,27 @@ class Column extends React.Component {
         }
     }
 
+    moveCard(dragIndex, hoverIndex) {
+        const dragCard = this.state.cards[dragIndex];
+        
+		this.setState(
+			update(this.state, {
+				cards: {
+					$splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]],
+				},
+			}),
+        );
+    }
+
+    handleEditCard(id, title, description, user) {
+        var index = this.state.cards.findIndex(x => x.id === id);
+
+        this.state.cards[index].content = title;
+        this.state.cards[index].details = description;
+        this.state.cards[index].user = user;
+        this.setState({ cards: this.state.cards });
+    }
+
     render() {
         const textAreaStyle = {
             resize: "none",
@@ -195,13 +225,14 @@ class Column extends React.Component {
                     :
                         (<h5 className="card-title">
                             {this.state.id !== "" ? <button type="button" onClick={this.editTitleMode}  className="title_btn" style={{cursor:"text"}}>{this.state.title}</button> : null}
-                            {this.state.id !== "" ? <button type="button" onClick={this.onClickDeleteColumn} style={{float: "right", cursor:"pointer"}} className="btn">X</button> : null}
+                            {this.state.id !== "" ? <button type="button" onClick={this.onClickDeleteColumn} style={{float: "right", cursor:"pointer"}} className="btn"><i class="far fa-trash-alt"></i>
+</button> : null}
                         </h5>)
                     }
                     <div className="card-text">
                         {
-                            this.state.cards.map((card) => {
-                                return (<Card card={card} localDeleteHandler={this.localDeleteTask} deleteHandler={this.deleteTask} key={card.id}/>);
+                            this.state.cards.map((card, index) => {
+                                return (<Card card={card} index={index} localDeleteHandler={this.localDeleteTask} deleteHandler={this.deleteTask} key={card.id} handleEditCardInColumn={this.handleEditCard} moveCard={this.moveCard}/>);
                             })
                         }
                     </div>

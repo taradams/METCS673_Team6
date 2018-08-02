@@ -1,100 +1,161 @@
 import React from 'react';
+import axios from 'axios';
 import { auth, db } from '../firebase';
 import * as routes from '../constants/routes';
 import { INITIAL_STATE } from '../reducers/SignUp';
-
-const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value,
-});
+import App from '../App.js'
+import {withRouter} from 'react-router-dom';
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import { getUser } from '../actions/actions';
 
 class SignUpForm extends React.Component {
+
   constructor(props) {
     super(props);
-
-    this.state = { ...INITIAL_STATE };
+    this.state = {
+      INITIAL_STATE
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.invalid = this.invalid.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  onSubmit = (event) => {
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  handleSubmit(event) {
     const {
-      username,
+      first_name,
+      last_name,
       email,
-      passwordOne,
-    } = this.state;
-    
-    const {
-      history,
-    } = this.props
+      password
+    } = this.state
 
-    auth.doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then(authUser => {
-        
-        // Create a user in your own accessible Firebase Database too
-        db.doCreateUser(authUser.user.uid, username, email)
-          .then(() => {
-            this.setState(() => ({ ...INITIAL_STATE }));
-            history.push(routes.HOME);
-          })
-          .catch(error => {
-            this.setState(byPropKey('error', error));
-          });      
-
-      })
-      .catch(error => {
-        this.setState(byPropKey('error', error));
-      });
-
+    axios.post(
+      'api/createaccount',
+      {
+        first_name, 
+        last_name,
+        email,
+        password
+      }
+    )
+    .then(
+      res => { 
+        this.setState(() => ({...INITIAL_STATE }));
+        this.props.getUser(res.data);
+        this.props.history.push(routes.PROJECT_MANAGER);
+      }
+    )
+    .catch(
+      error => {
+        console.log(error);
+      }
+    )
     event.preventDefault();
   }
 
+  invalid(password) {
+  if(!!password){
+  return !(password.length>=8);
+  }
+  return true;
+  } 
+
   render() {
-    const {
-      username,
-      email,
-      passwordOne,
-      passwordTwo,
-      error,
-    } = this.state;
-
-    const isInvalid =
-      passwordOne !== passwordTwo ||
-      passwordOne === '' ||
-      email === '' ||
-      username === '';
-   
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          value={username}
-          onChange={event => this.setState(byPropKey('username', event.target.value))}
-          type="text"
-          placeholder="Full Name"
-        />
-        <input
-          value={email}
-          onChange={event => this.setState(byPropKey('email', event.target.value))}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          value={passwordOne}
-          onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          value={passwordTwo}
-          onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
-          type="password"
-          placeholder="Confirm Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Sign Up
-        </button>
+      <div className="SignupForm">
+        <h4>Sign up</h4>
+        <form className="form-horizontal">
+          <div className="form-group">
+            <div className="col-1 col-ml-auto">
+              <label className="form-label" htmlFor="first_name">First Name</label>
+            </div>
+            <div className="col-3 col-mr-auto">
+              <input className="form-input"
+                type="text"
+                id="first_name"
+                name="first_name"
+                placeholder="First Name"
+                value={this.state.first_name}
+                onChange={this.handleChange}
+              />
+            </div>
+          </div>
+          <div className="form-group">
+            <div className="col-1 col-ml-auto">
+              <label className="form-label" htmlFor="last_name">Last Name</label>
+            </div>
+            <div className="col-3 col-mr-auto">
+              <input className="form-input"
+                type="text"
+                id="last_name"
+                name="last_name"
+                placeholder="Last Name"
+                value={this.state.last_name}
+                onChange={this.handleChange}
+              />
+            </div>
+          </div>
+          <div className="form-group">
+            <div className="col-1 col-ml-auto">
+              <label className="form-label" htmlFor="email">Email</label>
+            </div>
+            <div className="col-3 col-mr-auto">
+              <input className="form-input"
+                type="text"
+                id="email"
+                name="email"
+                placeholder="Email"
+                value={this.state.email}
+                onChange={this.handleChange}
+              />
+            </div>
+          </div>
+          <div className="form-group">
+            <div className="col-1 col-ml-auto">
+              <label className="form-label" htmlFor="password">Password: </label>
+            </div>
+            <div className="col-3 col-mr-auto">
+              <input className="form-input"
+                placeholder="password"
+                type="password"
+                name="password"
+                value={this.state.password}
+                onChange={this.handleChange}
+              />
+            </div>
+          </div>
+          <div className="form-group ">
+            <div className="col-7"></div>
+            <button
+              className="btn btn-primary col-1 col-mr-auto"
+              onClick={this.handleSubmit}
+              disabled={this.invalid(this.state.password)}
+              type="submit">Sign up</button>
+          </div>
+        </form>
+      </div>
+    )
+  }
 
-        { error && <p>{error.message}</p> }
-      </form>
-    );
+}
+
+function mapStateToProps(state) {
+  return {
   }
 }
 
-export default SignUpForm;
+//connects redux actions to props
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    getUser: getUser,
+  }, dispatch);
+}
+
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(SignUpForm));

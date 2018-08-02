@@ -28,10 +28,10 @@ app.use(express.static(path.join(__dirname, 'client','build')));
 
 
 
-//use sessions for tracking logins
+//use sessions for tracking logins 
 app.use(session({
   secret: 'guglielmo maccheroni',
-  resave: true,
+  resave: false,
   saveUninitialized: false
 }));
 

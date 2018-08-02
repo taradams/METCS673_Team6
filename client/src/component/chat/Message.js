@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './Message.css';
+import { connect } from 'react-redux';
 
-export default class Message extends React.Component {
+class Message extends React.Component {
     constructor(props) {
         super(props);
         var date = new Date(this.props.message.created_date);
@@ -10,16 +11,28 @@ export default class Message extends React.Component {
             {
                 meta:
                     this.props.message.author + ' ' +
-                    date.toLocaleString()
+                    date.toLocaleString(),
+                colorStyle:{backgroundColor:'#efecec'},
             }
-        )
+	)
+	if(this.props.message.author===(this.props.session.first_name + ' ' + this.props.session.last_name)) {
+        this.state.colorStyle={backgroundColor:'#add8e6'}
+	}
     }
     render() {
         return (
-                <div className="msg">
-                <p className="meta"> {this.state.meta} </p>
-                <p className="msg"> {this.props.message.content} </p>
+                <div className="msg" style = {this.state.colorStyle}>
+                <p className="meta" style={this.state.colorStyle}> {this.state.meta} </p>
+                <p className="msg" style={this.state.colorStyle}> {this.props.message.content} </p>
                 </div>
         )
     }
 }
+
+function mapStateToProps(state) {
+  return {
+  session:state.sessionState
+  }
+}
+
+export default connect(mapStateToProps,null)(Message)

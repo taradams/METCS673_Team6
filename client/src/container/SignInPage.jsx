@@ -6,19 +6,17 @@ import { auth } from '../firebase/auth';
 import * as routes from '../constants/routes';
 import { INITIAL_STATE } from '../reducers/SignIn';
 import SignInForm from '../component/SignIn';
+import './SignInPage.css';
 
 class SignInPage extends React.Component {
     render() {
         return (
-            <div>
-                <h1>SignIn</h1>
+            <div className="page">
+                <h1 className="title">Sign In to Elmo</h1>
                 <SignInForm history={this.props.history} />
-                <p>
-                    <Link to="/pw-forget">Forgot Password?</Link>
-                </p>
-                <p>
+                <p className="no_account">
                     Don't have an account?
-                    <Link to={routes.SIGN_UP}>Sign Up</Link>
+                    <Link to={routes.SIGN_UP} className="link">Sign Up</Link>
                 </p>
           </div>
         )

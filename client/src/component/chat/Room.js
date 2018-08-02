@@ -5,18 +5,23 @@ import Poster from './Poster';
 import './Room.css';
 import { sendMessage, retrieveMessages } from '../../api/chat';
 import { receiveUpdate, onUpdate } from '../../api/socket';
+import axios from 'axios';
+import {bindActionCreators} from 'redux';
 
-export default class Room extends React.Component {
+import { connect } from 'react-redux';
+
+class Room extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             title: 'General Chat Room',
-            chat_log: []
+            chat_log: [],
         };
         this.handler = this.handler.bind(this);
         this.getMessages = this.getMessages.bind(this);
         receiveUpdate(() => this.getMessages());
+	this.colorMessage = this.colorMessage.bind(this);
     }
  
     getMessages() {
@@ -25,6 +30,12 @@ export default class Room extends React.Component {
         }.bind(this));
     }
 
+   colorMessage(author) {
+           if(author===(this.props.session.first_name + ' ' + this.props.session.last_name)) {
+	return {backgroundColor:'#add8e6'};
+   }
+   else {return {backgroundColor:'#efecec'};}
+}
     componentDidMount() {
         this.getMessages();
 	const objDiv = document.getElementById('chat_messages');
@@ -32,7 +43,7 @@ export default class Room extends React.Component {
     }
     
     handler(data) {
-        const message = { content: data };
+        const message = { content: data, author: this.props.session.first_name + " " + this.props.session.last_name };
         sendMessage(message, function(json) {
             this.state.chat_log.push(json);
             onUpdate();
@@ -48,8 +59,9 @@ export default class Room extends React.Component {
     
     render() {
         const chat_log = this.state.chat_log.map((message,i) => {
-            return (
-		<Message key = {message._id} message = {message}/>
+            const color = this.colorMessage(message.author)
+		return (
+		<Message key = {message._id} message = {message} style={color}/>
 	    );
 	});
 	return (
@@ -67,3 +79,16 @@ export default class Room extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+  return {
+    session: state.sessionState,
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+  },dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Room);
