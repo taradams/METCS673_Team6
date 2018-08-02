@@ -92,11 +92,11 @@ class ProjectManagerPage extends React.Component {
   render() {
     axios.get('/api/accounts').then(response=>{console.log(response.data)})
     return (
-    <div>
+    <div className="pmContainer">
       <h1 className='pageTitle'>{this.props.session.first_name}'s Project Management Page</h1> 
-          <div className="row"> 
-            <Columns columns={this.state.columns} handleDeleteColumn={this.handleDeleteColumn} handleAddList={this.handleAddList}/> 
-          </div>
+      <div className="row"> 
+        <Columns columns={this.state.columns} handleDeleteColumn={this.handleDeleteColumn} handleAddList={this.handleAddList}/> 
+      </div>
       <h1 className='pageTitle'>Issue Manager Board</h1>
         <div className="row">
             <div className="container" style={{width:"fit-content"}}>
@@ -107,7 +107,7 @@ class ProjectManagerPage extends React.Component {
             </div>
             </div>
         </div>
-    </div>
+      </div>
     );
   }
 }

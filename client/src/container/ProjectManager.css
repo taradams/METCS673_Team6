@@ -1,10 +1,19 @@
 .pageTitle {
-  text-align:left;
-  margin-left:40px;
+    text-align: left;
+    margin-left: 40px;
+    font-weight: 400;
+    color: #eee;
+    font-size: 28px;
+    margin-bottom:0px;
 }
 
+.pmContainer {
+  width:100%
 
+}
 
 .row {
-  width: 100vw;
+  width:100%;
+  margin-left: 0px;
+  margin-right:0px;
 }
