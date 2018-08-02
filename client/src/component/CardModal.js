@@ -112,7 +112,7 @@ handleDescriptionChange(e){
     const editTask = {overview: this.state.titleInput, details: this.state.descriptionInput, assignee: this.state.selectedUserValue};
     EditIssue(editTask, this.props.cardID, function(json){
       onUpdate();
-      this.setState({titleInput: this.state.titleInput, descriptionInput: this.state.descriptionInput, selectedValue: this.state.selectedUserValue});                
+      this.setState({titleInput: this.state.titleInput, descriptionInput: this.state.descriptionInput, selectedUserValue: this.state.selectedUserValue});                
       this.handleEditTitleConfirmation();
       this.handleEditDescriptionConfirmation();
       this.handleAssignUserConfirmation();
