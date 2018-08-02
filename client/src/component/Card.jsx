@@ -210,3 +210,4 @@ Card.propTypes = {
 
 const dropTarget = DropTarget(Types.CARD, cardTarget, collectDropTarget)(Card);
 export default DragSource(Types.CARD, cardSource, collect)(dropTarget);   
+
