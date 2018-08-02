@@ -116,6 +116,8 @@ handleDescriptionChange(e){
       this.handleEditTitleConfirmation();
       this.handleEditDescriptionConfirmation();
       this.handleAssignUserConfirmation();
+      if (this.props.handleEdit)
+        this.props.handleEdit();
     }.bind(this));
   }
 

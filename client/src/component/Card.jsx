@@ -109,6 +109,7 @@ class Card extends React.Component {
         this.handleEditIssueTitle = this.handleEditIssueTitle.bind(this);
         this.handleEditIssueDescription = this.handleEditIssueDescription.bind(this);
         this.handleAssignUser = this.handleAssignUser.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
     }
 
     _handleFocus(text) {
@@ -158,6 +159,11 @@ class Card extends React.Component {
         });
     }
 
+    handleEdit() {
+        if (this.props.handleEditCardInColumn)
+            this.props.handleEditCardInColumn(this.state.id, this.state.titleInput, this.state.descriptionInput, this.state.userInput);
+    }
+
     //props 
     render() {
         // new stuff for modal
@@ -197,6 +203,7 @@ class Card extends React.Component {
                     onEditIssueTitle={this.handleEditIssueTitle}
                     onEditIssueDescription={this.handleEditIssueDescription}
                     onAssignUser={this.handleAssignUser}
+                    handleEdit={this.handleEdit}
                     />}
                     {/* {console.log(this.props.card.id)} */}
                 {/* new modal stuff */}

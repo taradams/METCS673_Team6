@@ -70,6 +70,7 @@ class Column extends React.Component {
         this.hasCard = this.hasCard.bind(this);
         this.moveCard = this.moveCard.bind(this)
         this.retrieveTask = this.retrieveTask.bind(this);
+        this.handleEditCard = this.handleEditCard.bind(this);
         
         receiveUpdate(() => this.retrieveTask());
     }
@@ -191,6 +192,15 @@ class Column extends React.Component {
         );
     }
 
+    handleEditCard(id, title, description, user) {
+        var index = this.state.cards.findIndex(x => x.id === id);
+
+        this.state.cards[index].content = title;
+        this.state.cards[index].details = description;
+        this.state.cards[index].user = user;
+        this.setState({ cards: this.state.cards });
+    }
+
     render() {
         const textAreaStyle = {
             resize: "none",
@@ -222,7 +232,7 @@ class Column extends React.Component {
                     <div className="card-text">
                         {
                             this.state.cards.map((card, index) => {
-                                return (<Card card={card} index={index} localDeleteHandler={this.localDeleteTask} deleteHandler={this.deleteTask} key={card.id} moveCard={this.moveCard}/>);
+                                return (<Card card={card} index={index} localDeleteHandler={this.localDeleteTask} deleteHandler={this.deleteTask} key={card.id} handleEditCardInColumn={this.handleEditCard} moveCard={this.moveCard}/>);
                             })
                         }
                     </div>
