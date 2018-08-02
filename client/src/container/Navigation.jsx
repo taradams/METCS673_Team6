@@ -45,7 +45,9 @@ class Navigation extends React.Component {
             <ul className="nav_bar">
                 <li><input type="submit" value="Project Manager" className="nav_button" onClick={this.pmt_click} /></li>
                 <li><input type="submit" value="Issue Tracker" className="nav_button" onClick={this.issue_tracker_click} /></li>
-                <li><input type="submit" value="Chat" className="nav_button" onClick={this.chat_click}/></li>
+                <li><button type="submit" value="Chat" className="nav_button" onClick={this.chat_click}>
+		<i class="far fa-comment"></i>    
+		</button></li>
                 <li className="sign_out_button"><SignOutButton /></li>
             </ul>
         );

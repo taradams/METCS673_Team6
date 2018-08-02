@@ -16,11 +16,12 @@ class Room extends React.Component {
         super(props);
         this.state = {
             title: 'General Chat Room',
-            chat_log: []
+            chat_log: [],
         };
         this.handler = this.handler.bind(this);
         this.getMessages = this.getMessages.bind(this);
         receiveUpdate(() => this.getMessages());
+	this.colorMessage = this.colorMessage.bind(this);
     }
  
     getMessages() {
@@ -29,6 +30,12 @@ class Room extends React.Component {
         }.bind(this));
     }
 
+   colorMessage(author) {
+           if(author===(this.props.session.first_name + ' ' + this.props.session.last_name)) {
+	return {backgroundColor:'#add8e6'};
+   }
+   else {return {backgroundColor:'#efecec'};}
+}
     componentDidMount() {
         this.getMessages();
 	const objDiv = document.getElementById('chat_messages');
@@ -52,8 +59,9 @@ class Room extends React.Component {
     
     render() {
         const chat_log = this.state.chat_log.map((message,i) => {
-            return (
-		<Message key = {message._id} message = {message}/>
+            const color = this.colorMessage(message.author)
+		return (
+		<Message key = {message._id} message = {message} style={color}/>
 	    );
 	});
 	return (

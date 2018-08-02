@@ -215,7 +215,8 @@ class Column extends React.Component {
                     :
                         (<h5 className="card-title">
                             {this.state.id !== "" ? <button type="button" onClick={this.editTitleMode}  className="title_btn" style={{cursor:"text"}}>{this.state.title}</button> : null}
-                            {this.state.id !== "" ? <button type="button" onClick={this.onClickDeleteColumn} style={{float: "right", cursor:"pointer"}} className="btn">X</button> : null}
+                            {this.state.id !== "" ? <button type="button" onClick={this.onClickDeleteColumn} style={{float: "right", cursor:"pointer"}} className="btn"><i class="far fa-trash-alt"></i>
+</button> : null}
                         </h5>)
                     }
                     <div className="card-text">

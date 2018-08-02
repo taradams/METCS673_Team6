@@ -197,7 +197,7 @@ handleDescriptionChange(e){
               <option value={this.state.psuedoUsers[4]}>{this.state.psuedoUsers[4]}</option> */}
             </select>
             </div>
-            <button type="button" className="submitBtn" onClick={this.handleOnEditClick2}>Submit</button>
+            <button type="button" className="submitBtn" onClick={this.handleOnEditClick2}><i class="far fa-check-square"></i></button>
             {}
             {/* <p>{this.state.selectedUserValue}</p> */}
           </div>
@@ -206,7 +206,9 @@ handleDescriptionChange(e){
           type="button"
           className="closeButton"
           onClick={onCloseRequest}
-        >X</button> 
+        ><i class="far fa-window-close"></i>
+
+</button> 
       </div>
     );
   }

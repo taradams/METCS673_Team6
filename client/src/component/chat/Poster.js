@@ -38,10 +38,12 @@ export default class Poster extends React.Component {
                             onChange={this.handleChange}
                         />
                     </div>
-                    <input
+                    <button
                         className="poster_button"
                         type="submit"
-                    />
+                    ><i class="fas fa-arrow-up"></i>
+
+</button>
                 </form>
             </div >
         );

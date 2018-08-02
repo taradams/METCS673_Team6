@@ -6,7 +6,8 @@ import Types from "../constants/types";
 import { findDOMNode } from 'react-dom';
 import CardModal from './CardModal'; // Import SimpleModal component
 import PropTypes from 'prop-types';
-
+import {connect} from 'react-redux';
+import {compose} from 'recompose';
 
 const cardSource = {
     beginDrag(props) {
@@ -102,7 +103,7 @@ class Card extends React.Component {
         this._handleFocus = this._handleFocus.bind(this);
         this._handleFocusOut = this._handleFocusOut.bind(this);
         this.onClickDelete = this.onClickDelete.bind(this);   
-        
+	this.colorCard = this.colorCard.bind(this); 
         //new stuff for modal
         this.handleToggleModal =this.handleToggleModal.bind(this);
         this.handleEditIssueTitle = this.handleEditIssueTitle.bind(this);
@@ -123,7 +124,12 @@ class Card extends React.Component {
             this.props.deleteHandler(this.props.card.id);
         }
     }
-
+    colorCard(author) {
+           if(author===(this.props.session.first_name)) {
+        return {backgroundColor:'#fdf8bf'};
+   }
+   else {return {backgroundColor:'#fff'};}
+}
     // Handle the visibility of the modal.
     // If `state.showModal` is false, sets it to true,
     // if is true, sets it to false.
@@ -159,14 +165,17 @@ class Card extends React.Component {
         //new stuff for modal
 
         const { isDragging, connectDragSource, connectDropTarget } = this.props;
-        const toRender = !isDragging ? 
-            (<div className="card">
+        const color = this.colorCard(this.state.userInput);
+	const toRender = !isDragging ? 
+            (<div className="card" style = {color}>
             <div className="card-body">
                 {
                     // this.props.card.content
                     this.state.titleInput
                 }
-                <button type="button" style={{float: "right"}} onClick={this.onClickDelete}  className="btn">X</button>
+                <button type="button" style={{float: "right"}} onClick={this.onClickDelete}  className="btn"><i class="far fa-trash-alt"></i>
+
+</button>
                 {/* new modal stuff */}
                 <button
                     type="button"
@@ -208,6 +217,12 @@ Card.propTypes = {
     classes: PropTypes.object,
   };
 
+function mapStateToProps(state) {
+  return {
+  session:state.sessionState
+  }
+}
+
 const dropTarget = DropTarget(Types.CARD, cardTarget, collectDropTarget)(Card);
-export default DragSource(Types.CARD, cardSource, collect)(dropTarget);   
+export default compose(connect(mapStateToProps,null),DragSource(Types.CARD, cardSource, collect))(dropTarget);   
 

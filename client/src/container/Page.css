@@ -35,6 +35,8 @@
     flex: 1 1 0;
     display: flex;
     overflow: hidden;
+    background: #333333;
+    border-left: 3px solid #333333;
 }
 
 .flex_box {
