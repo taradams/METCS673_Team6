@@ -5,7 +5,11 @@ import Poster from './Poster';
 import './Room.css';
 import { sendMessage, retrieveMessages } from '../../api/chat';
 import { receiveUpdate, onUpdate } from '../../api/socket';
+<<<<<<< HEAD
 import axios from 'axios';
+=======
+import {bindActionCreators} from 'redux';
+>>>>>>> 04d20bac6dd1b4dcfc3a017430badca9eaa1bec2
 import { connect } from 'react-redux';
 
 class Room extends React.Component {
@@ -34,6 +38,7 @@ class Room extends React.Component {
     }
     
     handler(data) {
+<<<<<<< HEAD
         const content = {content:data, author:this.props.session.first_name};
         axios.post('/api/chat',{content})
         .then(res => {
@@ -42,6 +47,14 @@ class Room extends React.Component {
           onUpdate();
           this.setState({chat_log:this.state.chat_log});
         }); 
+=======
+        const message = { content: data, author: this.props.session.first_name + " " + this.props.session.last_name };
+        sendMessage(message, function(json) {
+            this.state.chat_log.push(json);
+            onUpdate();
+            this.setState({ chat_log: this.state.chat_log }); 
+        }.bind(this)); 
+>>>>>>> 04d20bac6dd1b4dcfc3a017430badca9eaa1bec2
     }
     
     componentDidUpdate() {
@@ -74,8 +87,13 @@ class Room extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    session: state.sessionState
+    session: state.sessionState,
   }
 }
 
-export default connect(mapStateToProps,null)(Room);
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+  },dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Room);

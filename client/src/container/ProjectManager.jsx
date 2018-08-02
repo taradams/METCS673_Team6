@@ -4,9 +4,14 @@ import Column from '../component/Column';
 import './ProjectManager.css'
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
+<<<<<<< HEAD
 import axios from 'axios';
 import withAuthorization from '../component/withAuthorization';
 import {compose} from 'recompose';
+=======
+import withDragDropContext from '../lib/withDragDropContext';
+
+>>>>>>> 04d20bac6dd1b4dcfc3a017430badca9eaa1bec2
 class ProjectManagerPage extends React.Component {
   constructor(props) {
     super(props);
@@ -123,6 +128,10 @@ function mapDispatchToProps(dispatch){
   },dispatch);
 }
 
+<<<<<<< HEAD
 const authCondition = (user) => !!user;
 
 export default compose(withAuthorization(authCondition),connect(mapStateToProps, mapDispatchToProps),)(ProjectManagerPage);
+=======
+export default connect(mapStateToProps, mapDispatchToProps)(withDragDropContext(ProjectManagerPage));
+>>>>>>> 04d20bac6dd1b4dcfc3a017430badca9eaa1bec2
